@@ -4,6 +4,7 @@ using System.Collections;
 //added comment
 
 public class PE_Obj : MonoBehaviour {
+
 	public bool			still = false;
 	public PE_Collider	coll = PE_Collider.sphere;
 	//public PE_Collider	coll2 = PE_Collider.aabb;
@@ -81,8 +82,8 @@ public class PE_Obj : MonoBehaviour {
 				Vector3 overlap = Vector3.zero;
 				Vector3 thatP = that.transform.position;
 				Vector3 delta = pos1 - thatP;
-				if (delta.x >= 0 && delta.y >= 0) 
-				{ 
+				//if (delta.x >= 0 && delta.y >= 0) 
+				//{ 
 					// Top, Right (of that)
 					// Get the edges that we're concerned with
 					eX0 = pos0.x - this.transform.lossyScale.x / 2;
@@ -112,17 +113,18 @@ public class PE_Obj : MonoBehaviour {
 					//overlap.x = uX;
 					overlap.y = uY;
 
-					if (overlap.y > 0)
+					if (overlap.y >= 0)
 					{
 						print ("asdf");
 						Vector3 moved = transform.position;
-						//moved.y += (eY2 - eY1);
+						moved.y += (eY2 - eY1);
 						//right idea, glitchy since infinite gravity and only triggers first time it contacts
 						//moved.y = that.transform.position.y + (that.transform.lossyScale.y / 2);
 						transform.position = moved;
+						vel.y = 0;
 					}
-				} 
-				else if (delta.x >= 0 && delta.y < 0) 
+				//} 
+				/*else if (delta.x >= 0 && delta.y < 0) 
 				{ 
 					// Bottom, Right
 
@@ -135,7 +137,7 @@ public class PE_Obj : MonoBehaviour {
 				else if (delta.x < 0 && delta.y >= 0) { 
 					// Top, Left
 
-				}
+				}*/
 
 				break;
 			}
