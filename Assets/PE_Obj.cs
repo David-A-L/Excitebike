@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//added comment
-
 public class PE_Obj : MonoBehaviour {
 
 	public bool			still = false;
@@ -28,6 +26,10 @@ public class PE_Obj : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	public void UpdateAccel (Vector3 accIn){
+		acc += accIn;
 	}
 	
 	
