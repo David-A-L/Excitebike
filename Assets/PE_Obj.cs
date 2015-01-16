@@ -6,6 +6,7 @@ using System.Collections;
 public class PE_Obj : MonoBehaviour {
 	public bool			still = false;
 	public PE_Collider	coll = PE_Collider.sphere;
+	//public PE_Collider	coll2 = PE_Collider.aabb;
 	public PE_GravType	grav = PE_GravType.constant;
 	
 	public Vector3		acc = Vector3.zero;
@@ -68,26 +69,26 @@ public class PE_Obj : MonoBehaviour {
 			
 			break;
 			
-		/*case PE_Collider.aabb:
+		case PE_Collider.aabb:
 			
 			switch (that.coll) {
 			case PE_Collider.aabb:
 				// In Progress
 
 				// AABB / AABB collision
-				float eX, eY, eX2, eY2, dX, dY, eX0, eY0;
+				float eX1, eY1, eX2, eY2, dX, dY, eX0, eY0;
 
 				Vector3 overlap = Vector3.zero;
-				thatP = that.transform.position;
-				delta = pos1 - thatP;
+				Vector3 thatP = that.transform.position;
+				Vector3 delta = pos1 - thatP;
 				if (delta.x >= 0 && delta.y >= 0) 
 				{ 
-					// Top, Right
+					// Top, Right (of that)
 					// Get the edges that we're concerned with
 					eX0 = pos0.x - this.transform.lossyScale.x / 2;
 					eY0 = pos0.y - this.transform.lossyScale.y / 2;
-					eX = pos1.x - this.transform.lossyScale.x / 2;
-					eY = pos1.y - this.transform.lossyScale.y / 2;
+					eX1 = pos1.x - this.transform.lossyScale.x / 2;
+					eY1 = pos1.y - this.transform.lossyScale.y / 2;
 					eX2 = thatP.x + that.transform.lossyScale.x / 2 ;
 					eY2 = thatP.y + that.transform.lossyScale.y / 2 ;
 
@@ -108,8 +109,18 @@ public class PE_Obj : MonoBehaviour {
 						uY = 1 - (eY2-eY1) / (eY0-eY1);
 					}
 					// Find Overlaps (positive is an overlap, negative 
-					overlap.x = 
+					//overlap.x = uX;
+					overlap.y = uY;
 
+					if (overlap.y > 0)
+					{
+						print ("asdf");
+						Vector3 moved = transform.position;
+						//moved.y += (eY2 - eY1);
+						//right idea, glitchy since infinite gravity and only triggers first time it contacts
+						//moved.y = that.transform.position.y + (that.transform.lossyScale.y / 2);
+						transform.position = moved;
+					}
 				} 
 				else if (delta.x >= 0 && delta.y < 0) 
 				{ 
@@ -127,7 +138,7 @@ public class PE_Obj : MonoBehaviour {
 				}
 
 				break;
-			}*/
+			}
 			
 			break;
 		}
