@@ -19,16 +19,17 @@ public class Bike : MonoBehaviour {
 	}
 
 	AccInput curAccIn = AccInput.NONE;
-	public State curState = State.IN_AIR;
+	public State curState = State.ON_GROUND;
 
 	//these limits may have to co in the peo
-	float maxSpeed = 10f;
+	float maxSpeed = 4f;
 	float maxAngle = 45f;
 
 
 	float rotSpeed = 10f;
 	float slowAcc = 1f;
 	float fastAcc = 1.5f;
+	float constDecel = -1f;
 	// Use this for initialization
 	void Start () {
 		
@@ -64,11 +65,25 @@ public class Bike : MonoBehaviour {
 			accX = slowAcc;
 			break;
 		case AccInput.NONE:
+			accX = constDecel;
 			break;
 		}
-
+		
 		if (curState == State.ON_GROUND) {
-			bikePEO.UpdateAccel ( new Vector3(accX, 0, 0));
+			bikePEO.UpdateAccel (new Vector3(accX, 0, 0));
+
+			if (bikePEO.vel.x >= maxSpeed && curAccIn != AccInput.NONE)
+			{
+				print ("velfastcheck");
+				bikePEO.UpdateAccel (new Vector3(0,0,0));
+			}
+
+			if(bikePEO.vel.x <= 0 && curAccIn == AccInput.NONE)
+			{
+				print("velstopcheck");
+				bikePEO.UpdateAccel (new Vector3(0,0,0));
+			}
+
 		}
 		//TODO: call update temp based on input
 

@@ -29,7 +29,7 @@ public class PE_Obj : MonoBehaviour {
 	}
 
 	public void UpdateAccel (Vector3 accIn){
-		acc += accIn;
+		acc = accIn;
 	}
 	
 	
@@ -76,7 +76,7 @@ public class PE_Obj : MonoBehaviour {
 			
 			switch (that.coll) {
 			case PE_Collider.aabb:
-				// In Progress
+				// In Progress (we might need to add top left once we get the bike rotating?
 
 				// AABB / AABB collision
 				float eX1, eY1, eX2, eY2, dX, dY, eX0, eY0;
@@ -117,11 +117,9 @@ public class PE_Obj : MonoBehaviour {
 
 					if (overlap.y >= 0)
 					{
-						print ("asdf");
+						//print ("asdf");
 						Vector3 moved = transform.position;
 						moved.y += (eY2 - eY1);
-						//right idea, glitchy since infinite gravity and only triggers first time it contacts
-						//moved.y = that.transform.position.y + (that.transform.lossyScale.y / 2);
 						transform.position = moved;
 						vel.y = 0;
 					}
