@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//test
+
 public class Bike : MonoBehaviour {
 
 	public enum State {
