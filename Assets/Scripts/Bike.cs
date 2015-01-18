@@ -4,6 +4,7 @@ using System.Collections;
 //test
 
 public class Bike : MonoBehaviour {
+	//public PE_Obj bikePeo = this.GetComponent<PE_Obj> ();
 
 	public enum State {
 		IN_AIR,
