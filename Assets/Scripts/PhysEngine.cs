@@ -10,7 +10,8 @@ public enum PE_GravType {
 
 public enum PE_Collider {
 	sphere,
-	aabb
+	aabb,
+	plane
 }
 
 public class PhysEngine : MonoBehaviour {

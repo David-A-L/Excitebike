@@ -144,9 +144,22 @@ public class PE_Obj : MonoBehaviour {
 				}*/
 
 				break;
+
+			case PE_Collider.plane:
+				print ("collided with plane");
+				GameObject thatGO = that.gameObject;
+				this.transform.rotation = thatGO.transform.rotation;
+				Vector3 rampVec = thatGO.transform.right;
+				vel = Vector3.Project(vel, rampVec);
+				//FIXME
+				Vector3 temp = transform.position;
+				temp += thatGO.transform.up *.1f;
+				transform.position = temp;
+				break;
 			}
-			
+
 			break;
+
 		}
 	}
 	

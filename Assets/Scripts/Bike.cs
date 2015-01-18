@@ -114,13 +114,13 @@ public class Bike : MonoBehaviour {
 
 			if (bikePEO.vel.x >= maxSpeed && curAccIn != AccInput.NONE)
 			{
-				print ("velfastcheck");
+				//print ("velfastcheck");
 				bikePEO.UpdateAccel (new Vector3(0,0,0));
 			}
 
 			if(bikePEO.vel.x <= 0 && curAccIn == AccInput.NONE)
 			{
-				print("velstopcheck");
+				//print("velstopcheck");
 				bikePEO.UpdateAccel (new Vector3(0,0,0));
 				bikePEO.UpdateVel (new Vector3(0, bikePEO.vel.y, bikePEO.vel.z));
 			}
