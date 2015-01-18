@@ -31,6 +31,10 @@ public class PE_Obj : MonoBehaviour {
 	public void UpdateAccel (Vector3 accIn){
 		acc = accIn;
 	}
+
+	public void UpdateVel (Vector3 velIn){
+		vel = velIn;
+	}
 	
 	
 	void OnTriggerEnter(Collider other) {

@@ -19,7 +19,16 @@ public class Bike : MonoBehaviour {
 		FAST
 	}
 
+	enum DirInput {
+		UP,
+		DOWN,
+		NONE
+	}
+
 	AccInput curAccIn = AccInput.NONE;
+	DirInput curDirIn = DirInput.NONE;
+
+
 	public State curState = State.ON_GROUND;
 
 	//these limits may have to co in the peo
@@ -31,6 +40,11 @@ public class Bike : MonoBehaviour {
 	float slowAcc = 1f;
 	float fastAcc = 1.5f;
 	float constDecel = -1f;
+
+	float up = 2.5f;
+	float down = -2.5f;
+	float stay = 0f;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -51,12 +65,25 @@ public class Bike : MonoBehaviour {
 			curAccIn = AccInput.NONE;
 		}
 
+		if (Input.GetKey (KeyCode.DownArrow)) {
+			curDirIn = DirInput.DOWN;
+		}
+		else if (Input.GetKey (KeyCode.UpArrow)) {
+			curDirIn = DirInput.UP;
+		}
+		else {
+			curDirIn = DirInput.NONE;
+		}
+
+
+
 	}
 
 	void FixedUpdate (){
 		PE_Obj bikePEO = this.GetComponent<PE_Obj> ();
 
 		float accX = 0f;
+		float velZ = 0f;
 
 		switch (curAccIn) {
 		case AccInput.FAST:
@@ -69,7 +96,19 @@ public class Bike : MonoBehaviour {
 			accX = constDecel;
 			break;
 		}
-		
+
+		switch (curDirIn) {
+		case DirInput.DOWN:
+			velZ = down;
+			break;
+		case DirInput.UP:
+			velZ = up;
+			break;
+		case DirInput.NONE:
+			velZ = stay;
+			break;
+		}
+
 		if (curState == State.ON_GROUND) {
 			bikePEO.UpdateAccel (new Vector3(accX, 0, 0));
 
@@ -84,6 +123,10 @@ public class Bike : MonoBehaviour {
 				print("velstopcheck");
 				bikePEO.UpdateAccel (new Vector3(0,0,0));
 			}
+
+			//need to make this move a certain distance on input, then stop at that distance if key is released or keep going until
+			//	hit wall otherwise
+			bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
 
 		}
 		//TODO: call update temp based on input
