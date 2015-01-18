@@ -16,6 +16,7 @@ public class CameraLock : MonoBehaviour {
 	void LateUpdate () {
 		Vector3 tempPos = transform.position;
 		tempPos.z = -6.07f;
+		tempPos.y = 2.75f;
 		transform.position = tempPos;
 	}
 }

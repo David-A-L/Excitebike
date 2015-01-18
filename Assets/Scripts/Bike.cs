@@ -31,18 +31,18 @@ public class Bike : MonoBehaviour {
 
 	public State curState = State.ON_GROUND;
 
-	//these limits may have to co in the peo
-	float maxSpeed = 4f;
+	//max speed is same regardless of fast or slow accel
+	float maxSpeed = 8f;
 	float maxAngle = 45f;
 
 
 	float rotSpeed = 10f;
-	float slowAcc = 1f;
-	float fastAcc = 1.5f;
-	float constDecel = -1f;
+	float slowAcc = 3.25f;
+	float fastAcc = 5f;
+	float constDecel = -8f;
 
-	float up = 2.5f;
-	float down = -2.5f;
+	float up =5f;
+	float down = -5f;
 	float stay = 0f;
 
 	// Use this for initialization
@@ -122,6 +122,7 @@ public class Bike : MonoBehaviour {
 			{
 				print("velstopcheck");
 				bikePEO.UpdateAccel (new Vector3(0,0,0));
+				bikePEO.UpdateVel (new Vector3(0, bikePEO.vel.y, bikePEO.vel.z));
 			}
 
 			//need to make this move a certain distance on input, then stop at that distance if key is released or keep going until
