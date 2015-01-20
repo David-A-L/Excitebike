@@ -55,7 +55,7 @@ public class PE_Obj : MonoBehaviour {
 		// Assumes that "that" is still
 		
 		switch (this.coll) {
-		case PE_Collider.sphere:
+		/*case PE_Collider.sphere:
 			
 			switch (that.coll) {
 			case PE_Collider.sphere:
@@ -74,12 +74,15 @@ public class PE_Obj : MonoBehaviour {
 				break;
 			}
 			
-			break;
+			break;*/
 			
 		case PE_Collider.aabb:
-			
+			Bike thisBike = this.GetComponent<Bike>();
 			switch (that.coll) {
 			case PE_Collider.aabb:
+
+				thisBike.curState = Bike.State.ON_GROUND;
+
 				// In Progress (we might need to add top left once we get the bike rotating?
 
 				// AABB / AABB collision
@@ -146,12 +149,13 @@ public class PE_Obj : MonoBehaviour {
 				break;
 
 			case PE_Collider.plane:
-				print ("collided with plane");
+				thisBike.curState = Bike.State.ON_RAMP;
 				GameObject thatGO = that.gameObject;
-				this.transform.rotation = thatGO.transform.rotation;
 				Vector3 rampVec = thatGO.transform.right;
+				//vel = vel*Mathf.Cos(Quaternion.Angle(that.gameObject.transform.rotation,this.transform.rotation));
 				vel = Vector3.Project(vel, rampVec);
-				//FIXME
+				//acc = Vector3.Project(acc, rampVec);
+				//FIXME raycast?
 				Vector3 temp = transform.position;
 				temp += thatGO.transform.up *.1f;
 				transform.position = temp;
@@ -165,7 +169,7 @@ public class PE_Obj : MonoBehaviour {
 		//fixes: needs to rotate smoothly, needs to be overrided if there is rotation input(and the bike
 		//	is moving at a fast enough x velocity or is in air)
 		this.transform.rotation = that.gameObject.transform.rotation;
-	}
+	}//collision resolution
 	
 	
 }

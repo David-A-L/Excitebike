@@ -9,6 +9,7 @@ public class Bike : MonoBehaviour {
 	public enum State {
 		IN_AIR,
 		ON_GROUND,
+		ON_RAMP,
 		CRASHING,
 		CRASHED,
 	}
@@ -109,7 +110,7 @@ public class Bike : MonoBehaviour {
 			break;
 		}
 
-		if (curState == State.ON_GROUND) {
+		if (curState == State.ON_GROUND || curState == State.ON_RAMP) {
 			bikePEO.UpdateAccel (new Vector3(accX, 0, 0));
 
 			if (bikePEO.vel.x >= maxSpeed && curAccIn != AccInput.NONE)
