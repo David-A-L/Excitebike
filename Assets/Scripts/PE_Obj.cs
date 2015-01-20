@@ -161,6 +161,10 @@ public class PE_Obj : MonoBehaviour {
 			break;
 
 		}
+
+		//fixes: needs to rotate smoothly, needs to be overrided if there is rotation input(and the bike
+		//	is moving at a fast enough x velocity or is in air)
+		this.transform.rotation = that.gameObject.transform.rotation;
 	}
 	
 	
