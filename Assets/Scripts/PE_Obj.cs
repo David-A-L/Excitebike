@@ -154,7 +154,7 @@ public class PE_Obj : MonoBehaviour {
 				Vector3 rampVec = thatGO.transform.right;
 				//vel = vel*Mathf.Cos(Quaternion.Angle(that.gameObject.transform.rotation,this.transform.rotation));
 				vel = Vector3.Project(vel, rampVec);
-				//acc = Vector3.Project(acc, rampVec);
+				acc = Vector3.Project(acc, rampVec);
 				//FIXME raycast?
 				Vector3 temp = transform.position;
 				temp += thatGO.transform.up *.1f;
