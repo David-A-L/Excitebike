@@ -14,10 +14,20 @@ public enum PE_Collider {
 	plane
 }
 
+/*public enum PE_Dir { // The direction in which the PE_Obj is moving
+	still,
+	up,
+	down,
+	upRight,
+	downRight,
+	downLeft,
+	upLeft
+}*/
+
 public class PhysEngine : MonoBehaviour {
 	static public List<PE_Obj>	objs;
 	
-	public Vector3		gravity = new Vector3(0,-9.8f,0);
+	public Vector3		gravity = new Vector3(0,-15f,0);
 	
 	// Use this for initialization
 	void Awake() {
@@ -58,6 +68,22 @@ public class PhysEngine : MonoBehaviour {
 			break;
 		}
 		po.vel += tAcc * dt;
+
+		/*if (po.vel.x==0) { // Special case when po.vel.x == 0
+			if (po.vel.y > 0) {
+				po.dir = PE_Dir.up;
+			} else {
+				po.dir = PE_Dir.down;
+			}
+		} else if (po.vel.x>0 && po.vel.y>0) {
+			po.dir = PE_Dir.upRight;
+		} else if (po.vel.x>0 && po.vel.y<=0) {
+			po.dir = PE_Dir.downRight;
+		} else if (po.vel.x<0 && po.vel.y<=0) {
+			po.dir = PE_Dir.downLeft;
+		} else if (po.vel.x<0 && po.vel.y>0) {
+			po.dir = PE_Dir.upLeft;
+		}*/
 		
 		// Position
 		po.pos1 = po.pos0 = po.transform.position;
