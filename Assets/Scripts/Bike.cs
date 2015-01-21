@@ -130,7 +130,13 @@ public class Bike : MonoBehaviour {
 		if (curState == State.ON_GROUND || curState == State.ON_RAMP) {
 			bikePEO.UpdateAccel (new Vector3(accX, 0, 0));
 
-			if (bikePEO.vel.x >= maxSpeed && curAccIn != AccInput.NONE)
+			//automatically slow down if over max speed for any reason (after a jump boost)
+			if (bikePEO.vel.x > maxSpeed){
+				bikePEO.UpdateAccel(new Vector3(constDecel, 0, 0));
+			}
+
+
+			else if (bikePEO.vel.x == maxSpeed && curAccIn != AccInput.NONE)
 			{
 				//print ("velfastcheck");
 				bikePEO.UpdateAccel (new Vector3(0,0,0));
