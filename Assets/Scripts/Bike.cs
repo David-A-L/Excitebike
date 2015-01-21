@@ -26,9 +26,15 @@ public class Bike : MonoBehaviour {
 		NONE
 	}
 
+	enum RotInput {
+		LEFT, //aka rotating counter clockwise
+		RIGHT, //aka rotating clockwise
+		NONE
+	}
+
 	AccInput curAccIn = AccInput.NONE;
 	DirInput curDirIn = DirInput.NONE;
-
+	RotInput curRotIn = RotInput.NONE;
 
 	public State curState = State.ON_GROUND;
 
@@ -37,7 +43,7 @@ public class Bike : MonoBehaviour {
 	float maxAngle = 45f;
 
 
-	float rotSpeed = 10f;
+	float rotSpeed = 40f;
 	float slowAcc = 3.25f;
 	float fastAcc = 5f;
 	float constDecel = -8f;
@@ -74,6 +80,16 @@ public class Bike : MonoBehaviour {
 		}
 		else {
 			curDirIn = DirInput.NONE;
+		}
+
+		if (Input.GetKey (KeyCode.LeftArrow)) {
+			curRotIn = RotInput.LEFT;
+		}
+		else if (Input.GetKey (KeyCode.RightArrow)) {
+			curRotIn = RotInput.RIGHT;
+		}
+		else {
+			curRotIn = RotInput.NONE;
 		}
 
 
@@ -131,6 +147,28 @@ public class Bike : MonoBehaviour {
 			bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
 
 		}
+
+		//rotating: currently it messes with where the camera is so we'll have to fix that too
+		if (curState == State.ON_GROUND) {
+
+			//at a certain angle we need to crash, but for now we just max out
+			if (curRotIn == RotInput.LEFT && bikePEO.transform.eulerAngles.z <= maxAngle) {
+				bikePEO.transform.Rotate(Vector3.forward * (rotSpeed * Time.deltaTime));
+			}
+			else if (bikePEO.transform.eulerAngles.z >= maxAngle + 5)
+			{
+				//set bikePEO.transform.eulerAngles.z = 0;
+				Vector3 temp = bikePEO.transform.eulerAngles;
+				temp.z = 0;
+				bikePEO.transform.eulerAngles = temp;
+			}
+			else if (bikePEO.transform.eulerAngles.z >= 0) {
+				bikePEO.transform.Rotate(Vector3.back * (rotSpeed * Time.deltaTime));
+			}
+
+		}
+				
+			
 		//TODO: call update temp based on input
 
 	}
