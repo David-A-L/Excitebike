@@ -15,28 +15,27 @@ public class Bike : MonoBehaviour {
 		CRASHED,
 	}
 
-	enum AccInput {
+	public enum AccInput {
 		NONE,
 		SLOW,
 		FAST
 	}
 
-	enum DirInput {
+	public enum DirInput {
 		UP,
 		DOWN,
 		NONE
 	}
 
-	enum RotInput {
+	public enum RotInput {
 		LEFT, //aka rotating counter clockwise
 		RIGHT, //aka rotating clockwise
 		NONE
 	}
 
-	AccInput curAccIn = AccInput.NONE;
-	DirInput curDirIn = DirInput.NONE;
-	RotInput curRotIn = RotInput.NONE;
-
+	public AccInput curAccIn = AccInput.NONE;
+	public DirInput curDirIn = DirInput.NONE;
+	public RotInput curRotIn = RotInput.NONE;
 	public State curState = State.ON_GROUND;
 
 	//max speed is same regardless of fast or slow accel
@@ -155,10 +154,10 @@ public class Bike : MonoBehaviour {
 			{
 				bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
 				//wall (reduce accel when hit walls!)
-				if (bikePEO.transform.position.z >= 3.15)
-				{
-					bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0));
-				}
+				//if (bikePEO.transform.position.z >= 3.15)
+				//{
+					//bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0));
+				//}
 			}
 			//
 			else if (curDirIn == DirInput.DOWN)
@@ -166,10 +165,10 @@ public class Bike : MonoBehaviour {
 				bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
 
 				//wall
-				if (bikePEO.transform.position.z <= -3.15)
-				{
-					bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0));
-				}
+				//if (bikePEO.transform.position.z <= -3.15)
+				//{
+					//bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0));
+				//}
 			}
 			else
 			{
@@ -177,6 +176,10 @@ public class Bike : MonoBehaviour {
 				/*if (bikePEO.vel.z > 0) {
 					if (bikePEO.transform.position.z > 2.3625) {
 						//set bike position to go down until it reaches 2.3625
+						bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, down));
+						if (bikePEO.transform.position.z <= 2.3625) {
+							bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0));
+						}
 					}
 					else if (bikePEO.transform.position.z >= .7875) {
 						//set bike position to go up  until it reaches 2.3625
@@ -203,9 +206,9 @@ public class Bike : MonoBehaviour {
 					{
 						//set bike position to go down until it reaches .7875
 					}
-				}*/
+				}
 				//was going nowhere
-				//else
+				else*/
 				//{
 					bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
 				//}
