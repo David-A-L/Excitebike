@@ -6,6 +6,7 @@ using System.Collections;
 public class Bike : MonoBehaviour {
 	//public PE_Obj bikePeo = this.GetComponent<PE_Obj> ();
 
+	//two kinds of ramp, can move on one but not the other
 	public enum State {
 		IN_AIR,
 		ON_GROUND,
@@ -48,7 +49,7 @@ public class Bike : MonoBehaviour {
 	float fastAcc = 5f;
 	float constDecel = -8f;
 
-	float up =5f;
+	float up = 5f;
 	float down = -5f;
 	float stay = 0f;
 
@@ -144,7 +145,70 @@ public class Bike : MonoBehaviour {
 
 			//need to make this move a certain distance on input, then stop at that distance if key is released or keep going until
 			//	hit wall otherwise
-			bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
+			if(curDirIn == DirInput.UP)
+			{
+				bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
+				//wall (reduce accel when hit walls!)
+				if (bikePEO.transform.position.z >= 3.15)
+				{
+					bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0));
+				}
+			}
+			//
+			else if (curDirIn == DirInput.DOWN)
+			{
+				bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
+
+				//wall
+				if (bikePEO.transform.position.z <= -3.15)
+				{
+					bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0));
+				}
+			}
+			else
+			{
+				//was going up
+				/*if (bikePEO.vel.z > 0) {
+					if (bikePEO.transform.position.z > 2.3625) {
+						//set bike position to go down until it reaches 2.3625
+					}
+					else if (bikePEO.transform.position.z >= .7875) {
+						//set bike position to go up  until it reaches 2.3625
+					}
+					else if (bikePEO.transform.position.z >= -.7875) {
+						//set bike position to go up until it reaches .7875
+					}
+					else {
+						//set bike position to go up or down until it reaches -.7875
+					}
+				}
+				//was going down
+				else if (bikePEO.vel.z < 0) {
+					if (bikePEO.transform.position.z < -2.3625) {
+						//set bike position to go up until it reaches -2.3625
+					}
+					else if (bikePEO.transform.position.z <= -.7875) {
+						//set bike position to go down until it reaches -2.3625
+					}
+					else if (bikePEO.transform.position.z <= .7875) {
+						//set bike position to go down until it reaches -.7875
+					}
+					else
+					{
+						//set bike position to go down until it reaches .7875
+					}
+				}*/
+				//was going nowhere
+				//else
+				//{
+					bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
+				//}
+				
+
+				
+
+			}
+
 
 		}
 
