@@ -44,8 +44,8 @@ public class Bike : MonoBehaviour {
 
 
 	float rotSpeed = 40f;
-	float slowAcc = 3.25f;
-	float fastAcc = 5f;
+	public float slowAcc = 3.25f;
+	public float fastAcc = 5f;
 	float constDecel = -8f;
 
 	float up = 5f;
@@ -173,18 +173,15 @@ public class Bike : MonoBehaviour {
 			else
 			{
 				//was going up
-				/*if (bikePEO.vel.z > 0) {
-					if (bikePEO.transform.position.z > 2.3625) {
+				if (bikePEO.vel.z > 0f) {
+					if (bikePEO.transform.position.z > 2.3625f) {
 						//set bike position to go down until it reaches 2.3625
 						bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, down));
-						if (bikePEO.transform.position.z <= 2.3625) {
-							bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0));
-						}
 					}
-					else if (bikePEO.transform.position.z >= .7875) {
+					else if (bikePEO.transform.position.z > .7875f) {
 						//set bike position to go up  until it reaches 2.3625
 					}
-					else if (bikePEO.transform.position.z >= -.7875) {
+					else if (bikePEO.transform.position.z > -.7875f) {
 						//set bike position to go up until it reaches .7875
 					}
 					else {
@@ -192,14 +189,14 @@ public class Bike : MonoBehaviour {
 					}
 				}
 				//was going down
-				else if (bikePEO.vel.z < 0) {
-					if (bikePEO.transform.position.z < -2.3625) {
+				else if (bikePEO.vel.z < 0f) {
+					if (bikePEO.transform.position.z < -2.3625f) {
 						//set bike position to go up until it reaches -2.3625
 					}
-					else if (bikePEO.transform.position.z <= -.7875) {
+					else if (bikePEO.transform.position.z <= -.7875f) {
 						//set bike position to go down until it reaches -2.3625
 					}
-					else if (bikePEO.transform.position.z <= .7875) {
+					else if (bikePEO.transform.position.z <= .7875f) {
 						//set bike position to go down until it reaches -.7875
 					}
 					else
@@ -208,10 +205,10 @@ public class Bike : MonoBehaviour {
 					}
 				}
 				//was going nowhere
-				else*/
-				//{
-					bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
-				//}
+				else
+				{
+					bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0f));
+				}
 				
 
 				
