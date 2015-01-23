@@ -166,175 +166,11 @@ public class PE_Obj : MonoBehaviour {
 				}*/
 
 				break;
-
-		/*case PE_Collider.aabb:
-
-			switch (that.coll) {
-			case PE_Collider.aabb:
-
-				//we need to be careful with this: top of ramp will have same collision... also we need to change this state when the bike isn't colliding with anything
-				thisBike.curState = Bike.State.ON_GROUND;
-
-				// AABB / AABB collision
-				// Axis-Aligned Bounding Box
-				// With AABB collisions, we're usually concerned with corners and deciding which corner to consider when making comparisons.
-				// I believe that this corner should be determined by looking at the velocity of the moving body (this one)
-				
-				Vector3 a0, a1, b; // a0-moving corner last frame, a1-moving corner now, b-comparison corner on other object
-				a0 = a1 = b = Vector3.zero;	 // Sets a default value to keep the compiler from complaining
-				Vector3 delta = pos1 - pos0;
-				
-				if (dir == PE_Dir.down) {
-					// Just resolve to be on top
-					a1 = pos1;
-					a1.y -= transform.lossyScale.y/2f;
-					b = that.pos1;
-					b.y += that.transform.lossyScale.y/2f;
-					if (b.y > a1.y) {
-						posFinal.y += Mathf.Abs( a1.y - b.y );
-					}
-					// Handle vel
-					vel.y = 0;
-					
-					//if (ground == null) ground = that;
-					break; // Exit this switch statement: switch (that.coll)
-				}
-				
-				if (dir == PE_Dir.up) {
-					// Just resolve to be below
-					a1 = pos1;
-					a1.y += transform.lossyScale.y/2f;
-					b = that.pos1;
-					b.y -= that.transform.lossyScale.y/2f;
-					if (b.y < a1.y) {
-						posFinal.y -= Mathf.Abs( a1.y - b.y );
-					}
-					// Handle vel
-					vel.y = 0;
-					
-					break; // Exit this switch statement: switch (that.coll)
-				}
-				
-				if (dir == PE_Dir.upRight) { // Bottom, Left is the comparison corner
-					a1 = pos1;
-					a1.x += transform.lossyScale.x/2f;
-					a1.y += transform.lossyScale.y/2f;
-					a0 = a1 - delta;
-					b = that.pos1;
-					b.x -= that.transform.lossyScale.x/2f;
-					b.y -= that.transform.localScale.y/2f;
-				}
-				
-				if (dir == PE_Dir.upLeft) { // Bottom, Right is the comparison corner
-					a1 = pos1;
-					a1.x -= transform.lossyScale.x/2f;
-					a1.y += transform.lossyScale.y/2f;
-					a0 = a1 - delta;
-					b = that.pos1;
-					b.x += that.transform.lossyScale.x/2f;
-					b.y -= that.transform.localScale.y/2f;
-				}
-				
-				if (dir == PE_Dir.downLeft) { // Top, Right is the comparison corner
-					a1 = pos1;
-					a1.x -= transform.lossyScale.x/2f;
-					a1.y -= transform.lossyScale.y/2f;
-					a0 = a1 - delta;
-					b = that.pos1;
-					b.x += that.transform.lossyScale.x/2f;
-					b.y += that.transform.localScale.y/2f;
-				}
-				
-				if (dir == PE_Dir.downRight) { // Top, Left is the comparison corner
-					a1 = pos1;
-					a1.x += transform.lossyScale.x/2f;
-					a1.y -= transform.lossyScale.y/2f;
-					a0 = a1 - delta;
-					b = that.pos1;
-					b.x -= that.transform.lossyScale.x/2f;
-					b.y += that.transform.localScale.y/2f;
-				}
-				
-				// In the x dimension, find how far along the line segment between a0 and a1 we need to go to encounter b
-				float u = (b.x - a0.x) / (a1.x - a0.x);
-				
-				// Determine this point using linear interpolation (see the appendix of the book)
-				Vector3 pU = (1-u)*a0 + u*a1;
-				
-				// Use pU.y vs. b.y to tell which side of PE_Obj "that" PE_Obj "this" should be on
-				switch (dir) {
-				case PE_Dir.upRight:
-					if (pU.y > b.y) { // hit the left side
-						posFinal.x -= Mathf.Abs(a1.x - b.x);
-						
-						// Handle vel
-						vel.x = 0;
-						
-					} else { // hit the bottom
-						posFinal.y -= Mathf.Abs(a1.y - b.y);
-						
-						// Handle vel
-						vel.y = 0;
-						
-					}
-					break;
-					
-				case PE_Dir.downRight:
-					if (pU.y < b.y) { // hit the left side
-						posFinal.x -= Mathf.Abs(a1.x - b.x);
-						
-						// Handle vel
-						vel.x = 0;
-						
-					} else { // hit the top
-						posFinal.y += Mathf.Abs(a1.y - b.y);
-						
-						// Handle vel
-						vel.y = 0;
-						
-						//if (ground == null) ground = that;
-					}
-					break;
-					
-				case PE_Dir.upLeft:
-					if (pU.y > b.y) { // hit the right side
-						posFinal.x += Mathf.Abs(a1.x - b.x);
-						
-						// Handle vel
-						vel.x = 0;
-						
-					} else { // hit the bottom
-						posFinal.y -= Mathf.Abs(a1.y - b.y);
-						
-						// Handle vel
-						vel.y = 0;
-						
-					}
-					break;
-					
-				case PE_Dir.downLeft:
-					if (pU.y < b.y) { // hit the right side
-						posFinal.x += Mathf.Abs(a1.x - b.x);
-						
-						// Handle vel
-						vel.x = 0;
-						
-					} else { // hit the top
-						posFinal.y += Mathf.Abs(b.y - a1.y);
-						
-						// Handle vel
-						vel.y = 0;
-						
-						//if (ground == null) ground = that;
-					}
-					break;
-				}
-				
-				break;*/
 			
 
 			case PE_Collider.plane:
 				thisBike.curState = Bike.State.ON_RAMP;
+				grav = PE_GravType.none;
 				GameObject rampGO = that.gameObject;
 
 				Vector3 cornerPos = this.gameObject.transform.position;
@@ -355,7 +191,7 @@ public class PE_Obj : MonoBehaviour {
 				Ray cornerRay = new Ray(cornerPos,rampGO.transform.up);
 				RaycastHit hit = new RaycastHit();
 				if(!collider.Raycast(cornerRay,out hit,10f)){
-					print ("Didn't hit anything");
+					//print ("Didn't hit anything");
 					return;
 				}
 				Vector3 temp = transform.position;
@@ -375,6 +211,13 @@ public class PE_Obj : MonoBehaviour {
 		//	is moving at a fast enough x velocity or is in air)
 		//this.transform.rotation = that.gameObject.transform.rotation;
 	}//collision resolution
-	
+
+	void OnTriggerExit(Collider other){
+		if (other.gameObject.tag == "Ramp") {
+			Bike bScript = this.gameObject.GetComponent<Bike>();
+			bScript.curState = Bike.State.IN_AIR;
+			grav = PE_GravType.constant;
+		}
+	}
 	
 }

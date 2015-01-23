@@ -47,6 +47,7 @@ public class Bike : MonoBehaviour {
 	public float slowAcc = 3.25f;
 	public float fastAcc = 5f;
 	float constDecel = -8f;
+	float airDecel = -4f;
 
 	float up = 5f;
 	float down = -5f;
@@ -127,96 +128,100 @@ public class Bike : MonoBehaviour {
 		}
 
 		if (curState == State.ON_GROUND || curState == State.ON_RAMP) {
-			bikePEO.UpdateAccel (new Vector3(accX, 0, 0));
+			bikePEO.UpdateAccel (new Vector3 (accX, 0, 0));
+		}
 
-			//automatically slow down if over max speed for any reason (after a jump boost)
-			if (bikePEO.vel.x > maxSpeed){
-				bikePEO.UpdateAccel(new Vector3(constDecel, 0, 0));
-			}
+		//automatically slow down if over max speed for any reason (after a jump boost)
+		if (bikePEO.vel.x > maxSpeed && curState != State.IN_AIR){
+			bikePEO.UpdateAccel(new Vector3(constDecel, 0, 0));
+		}
+		else if (bikePEO.vel.x > maxSpeed && curState == State.IN_AIR){
+			bikePEO.UpdateAccel(new Vector3(airDecel, 0, 0));
+		}
+	
+		else if (bikePEO.vel.x == maxSpeed && curAccIn != AccInput.NONE && curState != State.IN_AIR)
+		{
+			//print ("velfastcheck");
+			bikePEO.UpdateAccel (new Vector3(0,0,0));
+		}
+	
+		if(bikePEO.vel.x <= 0 && curAccIn == AccInput.NONE)
+		{
+			//print("velstopcheck");
+			bikePEO.UpdateAccel (new Vector3(0,0,0));
+			bikePEO.UpdateVel (new Vector3(0, bikePEO.vel.y, bikePEO.vel.z));
+		}
 
 
-			else if (bikePEO.vel.x == maxSpeed && curAccIn != AccInput.NONE)
-			{
-				//print ("velfastcheck");
-				bikePEO.UpdateAccel (new Vector3(0,0,0));
-			}
 
-			if(bikePEO.vel.x <= 0 && curAccIn == AccInput.NONE)
-			{
-				//print("velstopcheck");
-				bikePEO.UpdateAccel (new Vector3(0,0,0));
-				bikePEO.UpdateVel (new Vector3(0, bikePEO.vel.y, bikePEO.vel.z));
-			}
 
 			//need to make this move a certain distance on input, then stop at that distance if key is released or keep going until
 			//	hit wall otherwise
-			if(curDirIn == DirInput.UP)
-			{
-				bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
-				//wall (reduce accel when hit walls!)
-				//if (bikePEO.transform.position.z >= 3.15)
-				//{
-					//bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0));
-				//}
+		if(curDirIn == DirInput.UP)
+		{
+			bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
+			//wall (reduce accel when hit walls!)
+			//if (bikePEO.transform.position.z >= 3.15)
+			//{
+				//bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0));
+			//}
+		}
+		//
+		else if (curDirIn == DirInput.DOWN)
+		{
+			bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
+		
+			//wall
+			//if (bikePEO.transform.position.z <= -3.15)
+			//{
+				//bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0));
+			//}
+		}
+		else
+		{
+			//was going up
+		if (bikePEO.vel.z > 0f) {
+			if (bikePEO.transform.position.z > 2.3625f) {
+				//set bike position to go down until it reaches 2.3625
+				bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, down));
 			}
-			//
-			else if (curDirIn == DirInput.DOWN)
-			{
-				bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
-
-				//wall
-				//if (bikePEO.transform.position.z <= -3.15)
-				//{
-					//bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0));
-				//}
+			else if (bikePEO.transform.position.z > .7875f) {
+				//set bike position to go up  until it reaches 2.3625
 			}
-			else
-			{
-				//was going up
-				if (bikePEO.vel.z > 0f) {
-					if (bikePEO.transform.position.z > 2.3625f) {
-						//set bike position to go down until it reaches 2.3625
-						bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, down));
-					}
-					else if (bikePEO.transform.position.z > .7875f) {
-						//set bike position to go up  until it reaches 2.3625
-					}
-					else if (bikePEO.transform.position.z > -.7875f) {
-						//set bike position to go up until it reaches .7875
-					}
-					else {
-						//set bike position to go up or down until it reaches -.7875
-					}
+			else if (bikePEO.transform.position.z > -.7875f) {
+				//set bike position to go up until it reaches .7875
+			}
+			else {
+				//set bike position to go up or down until it reaches -.7875
+			}
+		}
+		//was going down
+		else if (bikePEO.vel.z < 0f) {
+			if (bikePEO.transform.position.z < -2.3625f) {
+				//set bike position to go up until it reaches -2.3625
+			}
+			else if (bikePEO.transform.position.z <= -.7875f) {
+					//set bike position to go down until it reaches -2.3625
 				}
-				//was going down
-				else if (bikePEO.vel.z < 0f) {
-					if (bikePEO.transform.position.z < -2.3625f) {
-						//set bike position to go up until it reaches -2.3625
-					}
-					else if (bikePEO.transform.position.z <= -.7875f) {
-						//set bike position to go down until it reaches -2.3625
-					}
-					else if (bikePEO.transform.position.z <= .7875f) {
-						//set bike position to go down until it reaches -.7875
-					}
-					else
-					{
-						//set bike position to go down until it reaches .7875
-					}
+				else if (bikePEO.transform.position.z <= .7875f) {
+					//set bike position to go down until it reaches -.7875
 				}
-				//was going nowhere
 				else
 				{
-					bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0f));
+					//set bike position to go down until it reaches .7875
 				}
-				
-
-				
-
+			}
+			//was going nowhere
+			else
+			{
+				bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0f));
 			}
 
+		
 
+		
 		}
+
 
 		//rotating on ground: shouldn't be able to wheelie unless moving a certain speed
 		if (curState == State.ON_GROUND) {
