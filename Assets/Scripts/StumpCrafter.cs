@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿//move stumps further back in z direction
+using UnityEngine;
 using System.Collections;
 
 public class StumpCrafter : MonoBehaviour {

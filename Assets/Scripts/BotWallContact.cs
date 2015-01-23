@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WallContact : MonoBehaviour {
-
-
+public class BotWallContact : MonoBehaviour {
+	
+	
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
-
+	
 	//need to make this work with moving down to the lane and reducing accel
 	//this is for top wall (tag the walls)
 	void OnTriggerStay(Collider other){
@@ -25,17 +25,17 @@ public class WallContact : MonoBehaviour {
 			//tweak
 			bikePEO.acc.x = -3f;
 		}*/
-
+		
 		PE_Obj bikePEO = other.GetComponent<PE_Obj> ();
-
-		if (Input.GetKey (KeyCode.UpArrow))
+		
+		if (Input.GetKey (KeyCode.DownArrow))
 		{
 			bikePEO.vel.z = 0f;
 			//tweak (add limiter)
 			bikePEO.acc.x = -3f;
 		}
 		
-
+		
 	}
-
+	
 }
