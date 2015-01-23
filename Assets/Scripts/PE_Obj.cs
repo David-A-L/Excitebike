@@ -216,8 +216,8 @@ public class PE_Obj : MonoBehaviour {
 		if (other.gameObject.tag == "Ramp") {
 			Bike bScript = this.gameObject.GetComponent<Bike>();
 			bScript.curState = Bike.State.IN_AIR;
-			grav = PE_GravType.constant;
 		}
+		grav = PE_GravType.constant;
 	}
 	
 }

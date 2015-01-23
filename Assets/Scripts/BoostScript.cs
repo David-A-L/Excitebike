@@ -12,6 +12,8 @@ public class BoostScript : MonoBehaviour {
 
 	void OnTriggerStay(Collider other){
 		//TODO: change direction/power based on input
+		if (other.gameObject.tag != "Bike")
+			return;
 		PE_Obj otherPEO = other.GetComponent<PE_Obj> ();
 		otherPEO.acc += dir * power;
 	}
