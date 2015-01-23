@@ -3,6 +3,7 @@ using System.Collections;
 
 public class TopWallContact : MonoBehaviour {
 
+	float wallSpeed = 5f;
 
 	// Use this for initialization
 	void Start () {
@@ -32,7 +33,21 @@ public class TopWallContact : MonoBehaviour {
 		{
 			bikePEO.vel.z = 0f;
 			//tweak (add limiter)
-			bikePEO.acc.x = -3f;
+			if (bikePEO.vel.x > wallSpeed) {
+				bikePEO.acc.x = -3f;
+			}
+			//update these values if we tweak bike.cs
+			else if (bikePEO.vel.x < wallSpeed) {
+				if (Input.GetKey (KeyCode.X)) {
+					bikePEO.acc.x = 3.25f;
+				}
+				else if (Input.GetKey (KeyCode.Z)) {
+					bikePEO.acc.x = 5f;
+				}
+			}
+			else {
+				bikePEO.acc.x = 0f;
+			}
 		}
 		
 
