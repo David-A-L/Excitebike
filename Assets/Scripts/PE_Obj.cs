@@ -335,14 +335,31 @@ public class PE_Obj : MonoBehaviour {
 
 			case PE_Collider.plane:
 				thisBike.curState = Bike.State.ON_RAMP;
-				GameObject thatGO = that.gameObject;
-				Vector3 rampVec = thatGO.transform.right;
+				GameObject rampGO = that.gameObject;
+
+				Vector3 cornerPos = this.gameObject.transform.position;
+				//check which corner has collided
+				if (rampGO.transform.rotation.z > 0){
+					cornerPos.x += this.transform.lossyScale.x/2;
+				}
+				else {
+					cornerPos.x -= this.transform.lossyScale.x/2;
+				}
+				cornerPos.y -= this.transform.lossyScale.y/2;
+				Vector3 rampVec = rampGO.transform.right;
 				//vel = vel*Mathf.Cos(Quaternion.Angle(that.gameObject.transform.rotation,this.transform.rotation));
 				vel = Vector3.Project(vel, rampVec);
 				acc = Vector3.Project(acc, rampVec);
-				//FIXME raycast?
+
+				//RayCasting from corner toward plane to get depth of penetration
+				Ray cornerRay = new Ray(cornerPos,rampGO.transform.up);
+				RaycastHit hit = new RaycastHit();
+				if(!collider.Raycast(cornerRay,out hit,10f)){
+					print ("Didn't hit anything");
+					return;
+				}
 				Vector3 temp = transform.position;
-				temp += thatGO.transform.up *.1f;
+				temp += rampGO.transform.up * hit.distance;
 				transform.position = temp;
 				break;
 
