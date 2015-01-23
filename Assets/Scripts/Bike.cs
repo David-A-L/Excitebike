@@ -221,11 +221,11 @@ public class Bike : MonoBehaviour {
 
 		}
 
-		//rotating: currently it messes with where the camera is so we'll have to fix that too
+		//rotating on ground: shouldn't be able to wheelie unless moving a certain speed
 		if (curState == State.ON_GROUND) {
 
 			//at a certain angle we need to crash, but for now we just max out
-			if (curRotIn == RotInput.LEFT && bikePEO.transform.eulerAngles.z <= maxAngle) {
+			if (curRotIn == RotInput.LEFT && bikePEO.transform.eulerAngles.z <= maxAngle && (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Z))){
 				bikePEO.transform.Rotate(Vector3.forward * (rotSpeed * Time.deltaTime));
 			}
 			else if (bikePEO.transform.eulerAngles.z >= maxAngle + 5)
