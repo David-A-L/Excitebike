@@ -35,6 +35,7 @@ public class Bike : MonoBehaviour {
 
 	public AccInput curAccIn = AccInput.NONE;
 	public DirInput curDirIn = DirInput.NONE;
+	public DirInput prevDirIn = DirInput.NONE;
 	public RotInput curRotIn = RotInput.NONE;
 	public State curState = State.ON_GROUND;
 
@@ -43,6 +44,8 @@ public class Bike : MonoBehaviour {
 	float maxAirSpeed = 8f;
 	float maxAngle = 45f;
 
+	public Vector3 newPosition = Vector3.zero;
+	//public float transitionTime = 1f;
 
 	float rotSpeed = 40f;
 	public float slowAcc = 3.25f;
@@ -158,72 +161,91 @@ public class Bike : MonoBehaviour {
 
 
 
-			//need to make this move a certain distance on input, then stop at that distance if key is released or keep going until
-			//	hit wall otherwise
-		if(curDirIn == DirInput.UP)
-		{
+		//this needs to only happen on ground (or full width ramp)
+		//bug: for some reason the bike shoots to the top of the map??
+		if(curDirIn == DirInput.UP) {
 			bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
-			//wall (reduce accel when hit walls!)
-			//if (bikePEO.transform.position.z >= 3.15)
-			//{
-				//bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0));
-			//}
+			prevDirIn = DirInput.UP;
 		}
-		//
-		else if (curDirIn == DirInput.DOWN)
-		{
+		else if (curDirIn == DirInput.DOWN) {
 			bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
-		
-			//wall
-			//if (bikePEO.transform.position.z <= -3.15)
-			//{
-				//bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0));
-			//}
+			prevDirIn = DirInput.DOWN;
 		}
 		else
 		{
-			//was going up
-		if (bikePEO.vel.z > 0f) {
-			if (bikePEO.transform.position.z > 2.3625f) {
-				//set bike position to go down until it reaches 2.3625
-				bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, down));
+			if (bikePEO.transform.position.z > 2.25) {
+				//set bike position to go down until it reaches 2.25
+				newPosition = new Vector3(bikePEO.transform.position.x, bikePEO.transform.position.y, 2.25f);
+				bikePEO.transform.position = Vector3.Lerp(bikePEO.transform.position, newPosition, .35f);
+				bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0f));
+				
 			}
-			else if (bikePEO.transform.position.z > .7875f) {
-				//set bike position to go up  until it reaches 2.3625
+			else if (bikePEO.transform.position.z <= 2.25 && bikePEO.transform.position.z > .75f) {
+				if (prevDirIn == DirInput.UP) {
+					//set bike position to go up until it reaches 2.25
+					newPosition	= new Vector3(bikePEO.transform.position.x, bikePEO.transform.position.y, 2.25f);
+				}
+				else if (prevDirIn == DirInput.DOWN) {
+					//go down to .75
+					newPosition	= new Vector3(bikePEO.transform.position.x, bikePEO.transform.position.y, .75f);
+				}
+				bikePEO.transform.position = Vector3.Lerp(bikePEO.transform.position, newPosition, .35f);
+				bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0f));
 			}
-			else if (bikePEO.transform.position.z > -.7875f) {
-				//set bike position to go up until it reaches .7875
+			else if (bikePEO.transform.position.z <= .75f && bikePEO.transform.position.z > -.75f) {
+				if (prevDirIn == DirInput.UP) {
+					newPosition	= new Vector3(bikePEO.transform.position.x, bikePEO.transform.position.y, .75f);
+				}
+				else if (prevDirIn == DirInput.DOWN) {
+					newPosition	= new Vector3(bikePEO.transform.position.x, bikePEO.transform.position.y, -.75f);
+				}
+				bikePEO.transform.position = Vector3.Lerp(bikePEO.transform.position, newPosition, .35f);
+				bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0f));
+			}
+			else if (bikePEO.transform.position.z <= -.75f && bikePEO.transform.position.z > -2.25f) {
+				if (prevDirIn == DirInput.UP) {
+					newPosition	= new Vector3(bikePEO.transform.position.x, bikePEO.transform.position.y, -.75f);
+				}
+				else if (prevDirIn == DirInput.DOWN) {
+					newPosition	= new Vector3(bikePEO.transform.position.x, bikePEO.transform.position.y, -2.25f);
+				}
+				bikePEO.transform.position = Vector3.Lerp(bikePEO.transform.position, newPosition, .35f);
+				bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0f));
 			}
 			else {
-				//set bike position to go up or down until it reaches -.7875
+				newPosition = new Vector3(bikePEO.transform.position.x, bikePEO.transform.position.y, -2.25f);
+				bikePEO.transform.position = Vector3.Lerp(bikePEO.transform.position, newPosition, .35f);
+				bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0f));
+
 			}
 		}
-		//was going down
-		else if (bikePEO.vel.z < 0f) {
-			if (bikePEO.transform.position.z < -2.3625f) {
-				//set bike position to go up until it reaches -2.3625
-			}
-			else if (bikePEO.transform.position.z <= -.7875f) {
-					//set bike position to go down until it reaches -2.3625
+			//}
+			//was going down
+			/*else if (bikePEO.vel.z < 0f) {
+				if (bikePEO.transform.position.z < -2.3625f) {
+					//set bike position to go up until it reaches -2.3625
 				}
-				else if (bikePEO.transform.position.z <= .7875f) {
-					//set bike position to go down until it reaches -.7875
+				else if (bikePEO.transform.position.z <= -.7875f) {
+						//set bike position to go down until it reaches -2.3625
+					}
+					else if (bikePEO.transform.position.z <= .7875f) {
+						//set bike position to go down until it reaches -.7875
+					}
+					else
+					{
+						//set bike position to go down until it reaches .7875
+					}
 				}
-				else
-				{
-					//set bike position to go down until it reaches .7875
-				}
-			}
 			//was going nowhere
 			else
 			{
 				bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0f));
-			}
+			}*/
 
 		
 
 		
-		}
+		//}
 
 
 		//rotating on ground: shouldn't be able to wheelie unless moving a certain speed
