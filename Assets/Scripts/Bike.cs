@@ -40,6 +40,7 @@ public class Bike : MonoBehaviour {
 
 	//max speed is same regardless of fast or slow accel
 	float maxSpeed = 8f;
+	float maxAirSpeed = 8f;
 	float maxAngle = 45f;
 
 
@@ -138,7 +139,9 @@ public class Bike : MonoBehaviour {
 		else if (bikePEO.vel.x > maxSpeed && curState == State.IN_AIR){
 			bikePEO.UpdateAccel(new Vector3(airDecel, 0, 0));
 		}
-	
+		else if (bikePEO.vel.x <= maxAirSpeed && curState == State.IN_AIR){
+			bikePEO.UpdateAccel (new Vector3(0,0,0));
+		}
 		else if (bikePEO.vel.x == maxSpeed && curAccIn != AccInput.NONE && curState != State.IN_AIR)
 		{
 			//print ("velfastcheck");
