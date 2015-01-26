@@ -59,7 +59,10 @@ public class Bike : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		PE_Obj bikePEO = this.GetComponent<PE_Obj> ();
+		Vector3 temp = bikePEO.transform.position;
+		temp.z = -2.25f;
+		bikePEO.transform.position = temp;
 	}
 
 	void Update(){
@@ -162,7 +165,6 @@ public class Bike : MonoBehaviour {
 
 		//lanes
 		//this needs to only happen on ground (or full width ramp)
-		//bug: for some reason the bike shoots to the top of the map??
 		if (curState == State.ON_GROUND) {
 			if(curDirIn == DirInput.UP) {
 				bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, velZ));
@@ -231,9 +233,10 @@ public class Bike : MonoBehaviour {
 			}
 			else if (bikePEO.transform.eulerAngles.z >= maxAngle + 5)
 			{
-				Vector3 temp = bikePEO.transform.eulerAngles;
+				/*Vector3 temp = bikePEO.transform.eulerAngles;
 				temp.z = 0;
-				bikePEO.transform.eulerAngles = temp;
+				bikePEO.transform.eulerAngles = temp;*/
+				bikePEO.transform.Rotate(Vector3.forward * (rotSpeed * Time.deltaTime));
 			}
 			else if (bikePEO.transform.eulerAngles.z >= 0) {
 				bikePEO.transform.Rotate(Vector3.back * (rotSpeed * Time.deltaTime));
@@ -241,7 +244,6 @@ public class Bike : MonoBehaviour {
 
 		}
 
-		//bug: needs to maintain (right) rotation when it hits ground, then slowly rotate to normal
 		//minor bug: input right should override input left, not hugely important
 		//in air rotation
 		if (curState == State.IN_AIR) {
