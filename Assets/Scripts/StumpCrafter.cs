@@ -4,12 +4,12 @@ using System.Collections;
 
 public class StumpCrafter : MonoBehaviour {
 	//fields set in the Unity Inspector pane
-	public int numStumps = 10000;
 	public GameObject stumpPrefab;
 	public bool _____________________;
 
 	//fields set dynamically
 	public GameObject[] stumpInstances;
+	int numStumps = 1000;
 
 	void Awake () {
 		//make an array to hold all the stump instances
@@ -18,12 +18,14 @@ public class StumpCrafter : MonoBehaviour {
 		GameObject anchor = GameObject.Find ("StumpAnchor");
 		//position of first stump
 		Vector3 sPos = Vector3.zero;
-		sPos.x = -350f;
+		sPos.x = -350.8f;
 		sPos.y = -3f;
 		sPos.z = 5f;
 		//iterate through and create stumps
+		numStumps = 1000;
 		GameObject stump;
 		for (int i = 0; i < numStumps; i++){
+			print (numStumps);
 			stump = Instantiate (stumpPrefab) as GameObject;
 			//position stump
 			sPos.x += .8f;
