@@ -4,13 +4,12 @@ using System.Collections;
 //test
 
 public class Bike : MonoBehaviour {
-	//public PE_Obj bikePeo = this.GetComponent<PE_Obj> ();
 
 	//two kinds of ramp, can move on one but not the other
 	public enum State {
 		IN_AIR,
 		ON_GROUND,
-		ON_RAMP,
+		ON_RAMP
 	}
 
 	public enum AccInput {
