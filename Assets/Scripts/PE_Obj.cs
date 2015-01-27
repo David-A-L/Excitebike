@@ -190,6 +190,7 @@ public class PE_Obj : MonoBehaviour {
 
 				//RayCasting from corner toward plane to get depth of penetration
 				Ray cornerRay = new Ray(cornerPos,rampGO.transform.up);
+				Debug.DrawRay(cornerPos, rampGO.transform.up * 100f);
 				RaycastHit hit = new RaycastHit();
 				if(!collider.Raycast(cornerRay,out hit,100f)){
 					//print ("Didn't hit anything");
