@@ -14,22 +14,11 @@ public class BotWallContact : MonoBehaviour {
 	void Update () {
 		
 	}
-	
-	//need to make this work with moving down to the lane and reducing accel
-	//this is for top wall (tag the walls)
-	void OnTriggerStay(Collider other){
-		/*Bike bikeScript = other.GetComponent<Bike> ();
-		PE_Obj bikePEO = other.GetComponent<PE_Obj> ();
 
-		if (bikeScript.curDirIn != Bike.DirInput.UP) {
-			bikePEO.vel.z = 0f;
-			//tweak
-			bikePEO.acc.x = -3f;
-		}*/
-		
+	void OnTriggerStay(Collider other){
 		PE_Obj bikePEO = other.GetComponent<PE_Obj> ();
 		
-		if (Input.GetKey (KeyCode.DownArrow))
+		if (Input.GetKey (KeyCode.DownArrow) && other.tag == "Bike")
 		{
 			bikePEO.vel.z = 0f;
 			//tweak (add limiter)

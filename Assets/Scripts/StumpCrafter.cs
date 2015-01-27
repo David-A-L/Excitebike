@@ -4,7 +4,7 @@ using System.Collections;
 
 public class StumpCrafter : MonoBehaviour {
 	//fields set in the Unity Inspector pane
-	public int numStumps = 3000;
+	public int numStumps = 10000;
 	public GameObject stumpPrefab;
 	public bool _____________________;
 
@@ -18,7 +18,7 @@ public class StumpCrafter : MonoBehaviour {
 		GameObject anchor = GameObject.Find ("StumpAnchor");
 		//position of first stump
 		Vector3 sPos = Vector3.zero;
-		sPos.x = -300f;
+		sPos.x = -350f;
 		sPos.y = -3f;
 		sPos.z = 5f;
 		//iterate through and create stumps
