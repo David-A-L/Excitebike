@@ -192,12 +192,14 @@ public class PE_Obj : MonoBehaviour {
 				Ray cornerRay = new Ray(cornerPos,rampGO.transform.up);
 				Debug.DrawRay(cornerPos, rampGO.transform.up * 100f);
 				RaycastHit hit = new RaycastHit();
-				if(!collider.Raycast(cornerRay,out hit,100f)){
-					//print ("Didn't hit anything");
+				if(!Physics.Raycast(cornerRay,out hit,100f)){
+					print ("Didn't hit anything");
 					return;
 				}
+				/*float dist = Mathf.Sqrt(transform.lossyScale.x*transform.lossyScale.x + transform.lossyScale.y*transform.lossyScale.y);
+				dist -= hit.distance;*/
 				Vector3 temp = transform.position;
-				temp += rampGO.transform.up * hit.distance;
+				temp += rampGO.transform.up * (hit.distance - .0049f);
 				transform.position = temp;
 				break;
 
@@ -215,7 +217,7 @@ public class PE_Obj : MonoBehaviour {
 	}//collision resolution
 
 	void OnTriggerExit(Collider other){
-		if (other.gameObject.tag == "RampBoost") {
+		if (other.tag == "RampBoost") {
 			Bike bScript = this.gameObject.GetComponent<Bike>();
 			bScript.curState = Bike.State.IN_AIR;
 		}
