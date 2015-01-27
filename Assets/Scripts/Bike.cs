@@ -65,6 +65,32 @@ public class Bike : MonoBehaviour {
 		bikePEO.transform.position = temp;
 	}
 
+	void crash() {
+		PE_Obj bikePEO = this.GetComponent<PE_Obj> ();
+
+		print ("crashed!");
+		
+		Vector3 tempPos = bikePEO.transform.position;
+		Vector3 tempRot = Vector3.zero;
+		Vector3 tempVel = Vector3.zero;
+		Vector3 tempAcc = Vector3.zero;
+		
+		//we will need to grab the curtime when it becomes state.crashed (float curTime = Time.time;)
+		//crash for 1 to 4 seconds, randomly
+		float crashTime = Random.Range (1,4);
+		
+		if (Time.time < curTime + crashTime) {
+			bikePEO.UpdateAccel (tempAcc);
+			bikePEO.UpdateVel (tempVel);
+			tempPos.z = 2.25f;
+			bikePEO.transform.position = tempPos;
+			bikePEO.transform.eulerAngles = tempRot;
+		}
+		else {
+			crashed = false;
+		}
+	}
+
 	void Update(){
 		//should return -1 or 1, gives us direction based on wasd or arrow key input 
 		//if -1 rotate left, if 1 rotate right, if 0 rotate towards parallel w/ surface
@@ -140,7 +166,7 @@ public class Bike : MonoBehaviour {
 		//	also crashes if hits ramp weird...
 		if (crashed)
 		{
-			print ("crashed!");
+			/*print ("crashed!");
 
 			Vector3 tempPos = bikePEO.transform.position;
 			Vector3 tempRot = Vector3.zero;
@@ -160,7 +186,8 @@ public class Bike : MonoBehaviour {
 			}
 			else {
 				crashed = false;
-			}
+			}*/
+			crash();
 		}
 
 		else {
