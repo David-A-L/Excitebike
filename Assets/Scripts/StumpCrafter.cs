@@ -19,8 +19,8 @@ public class StumpCrafter : MonoBehaviour {
 		//position of first stump
 		Vector3 sPos = Vector3.zero;
 		sPos.x = -3.8f;
-		sPos.y = -1f;
-		sPos.z = 2f;
+		sPos.y = -3f;
+		sPos.z = 5f;
 		//iterate through and create stumps
 		GameObject stump;
 		for (int i = 0; i < numStumps; i++){
