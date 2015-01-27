@@ -11,8 +11,6 @@ public class Bike : MonoBehaviour {
 		IN_AIR,
 		ON_GROUND,
 		ON_RAMP,
-		CRASHING,
-		CRASHED,
 	}
 
 	public enum AccInput {
@@ -56,6 +54,9 @@ public class Bike : MonoBehaviour {
 	float up = 5f;
 	float down = -5f;
 	float stay = 0f;
+
+	public float curTime = 0f;
+	public bool crashed = false;
 
 	// Use this for initialization
 	void Start () {
@@ -134,6 +135,36 @@ public class Bike : MonoBehaviour {
 			break;
 		}
 
+		//bug with crashing: needs to stay in top lane after crashing
+		//crashing, in the future we will need to move it past the ramp to the ground immediately after the ramp
+		//other crash states: shouldn't crash while landing at max left rotation in air, should crash at max right
+		//	also crashes if hits ramp weird...
+		if (crashed)
+		{
+			print ("crashed!");
+
+			Vector3 tempPos = bikePEO.transform.position;
+			Vector3 tempRot = Vector3.zero;
+			Vector3 tempVel = Vector3.zero;
+			Vector3 tempAcc = Vector3.zero;
+
+			//we will need to grab the curtime when it becomes state.crashed (float curTime = Time.time;)
+			//crash for 1 to 4 seconds, randomly
+			float crashTime = Random.Range (1,4);
+
+			if (Time.time < curTime + crashTime) {
+				bikePEO.UpdateAccel (tempAcc);
+				bikePEO.UpdateVel (tempVel);
+				tempPos.z = 2.25f;
+				bikePEO.transform.position = tempPos;
+				bikePEO.transform.eulerAngles = tempRot;
+			}
+			else {
+				crashed = false;
+			}
+		}
+
+		else {
 		if (curState == State.ON_GROUND || curState == State.ON_RAMP) {
 			bikePEO.UpdateAccel (new Vector3 (accX, 0, 0));
 		}
@@ -231,6 +262,11 @@ public class Bike : MonoBehaviour {
 			if (curRotIn == RotInput.LEFT && bikePEO.transform.eulerAngles.z <= maxAngle && (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Z))){
 				bikePEO.transform.Rotate(Vector3.forward * (rotSpeed * Time.deltaTime));
 			}
+			else if (bikePEO.transform.eulerAngles.z >= maxAngle && bikePEO.transform.eulerAngles.z <= maxAngle + 4)
+			{
+				crashed = true;
+				curTime = Time.time;
+			}
 			else if (bikePEO.transform.eulerAngles.z >= maxAngle + 5)
 			{
 				/*Vector3 temp = bikePEO.transform.eulerAngles;
@@ -272,6 +308,7 @@ public class Bike : MonoBehaviour {
 				
 			
 		//TODO: call update temp based on input
+		}
 
 	}
 }
