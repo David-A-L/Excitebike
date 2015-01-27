@@ -29,6 +29,9 @@ public class TopWallContact : MonoBehaviour {
 
 		PE_Obj bikePEO = other.GetComponent<PE_Obj> ();
 
+		if (bikePEO == null)
+			return;
+
 		if (Input.GetKey (KeyCode.UpArrow))
 		{
 			bikePEO.vel.z = 0f;

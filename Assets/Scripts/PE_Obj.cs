@@ -170,8 +170,10 @@ public class PE_Obj : MonoBehaviour {
 
 			case PE_Collider.plane:
 				thisBike.curState = Bike.State.ON_RAMP;
-				grav = PE_GravType.none;
+
 				GameObject rampGO = that.gameObject;
+				if (rampGO.tag == "Ramp")
+					grav = PE_GravType.none;
 
 				Vector3 cornerPos = this.gameObject.transform.position;
 				//check which corner has collided
@@ -183,14 +185,13 @@ public class PE_Obj : MonoBehaviour {
 				}
 				cornerPos.y -= this.transform.lossyScale.y/2;
 				Vector3 rampVec = rampGO.transform.right;
-				//vel = vel*Mathf.Cos(Quaternion.Angle(that.gameObject.transform.rotation,this.transform.rotation));
 				vel = Vector3.Project(vel, rampVec);
 				acc = Vector3.Project(acc, rampVec);
 
 				//RayCasting from corner toward plane to get depth of penetration
 				Ray cornerRay = new Ray(cornerPos,rampGO.transform.up);
 				RaycastHit hit = new RaycastHit();
-				if(!collider.Raycast(cornerRay,out hit,10f)){
+				if(!collider.Raycast(cornerRay,out hit,100f)){
 					//print ("Didn't hit anything");
 					return;
 				}
@@ -213,7 +214,7 @@ public class PE_Obj : MonoBehaviour {
 	}//collision resolution
 
 	void OnTriggerExit(Collider other){
-		if (other.gameObject.tag == "Ramp") {
+		if (other.gameObject.tag == "RampBoost") {
 			Bike bScript = this.gameObject.GetComponent<Bike>();
 			bScript.curState = Bike.State.IN_AIR;
 		}
