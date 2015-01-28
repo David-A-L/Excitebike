@@ -285,7 +285,7 @@ public class Bike : MonoBehaviour {
 		//minor bug: input right should override input left, not hugely important
 		//in air rotation
 		if (curState == State.IN_AIR) {
-			if (bikePEO.transform.eulerAngles.z >= maxAngle && bikePEO.transform.eulerAngles.z < 180) {
+			if (bikePEO.transform.eulerAngles.z >= maxAngle - 1 && bikePEO.transform.eulerAngles.z < 180) {
 				Vector3 temp = bikePEO.transform.eulerAngles;
 				temp.z = maxAngle - 1;
 				bikePEO.transform.eulerAngles = temp;
