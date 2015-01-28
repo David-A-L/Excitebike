@@ -199,7 +199,7 @@ public class PE_Obj : MonoBehaviour {
 				/*float dist = Mathf.Sqrt(transform.lossyScale.x*transform.lossyScale.x + transform.lossyScale.y*transform.lossyScale.y);
 				dist -= hit.distance;*/
 				Vector3 temp = transform.position;
-				temp += rampGO.transform.up * (hit.distance - .0049f);
+				temp += rampGO.transform.up * (hit.distance);
 				transform.position = temp;
 				break;
 
