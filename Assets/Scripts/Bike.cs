@@ -82,7 +82,7 @@ public class Bike : MonoBehaviour {
 		if (Time.time < curTime + crashTime) {
 			bikePEO.UpdateAccel (tempAcc);
 			bikePEO.UpdateVel (tempVel);
-			tempPos.z = 2.25f;
+			tempPos.z = 2.75f;
 			bikePEO.transform.position = tempPos;
 			bikePEO.transform.eulerAngles = tempRot;
 		}
@@ -160,33 +160,9 @@ public class Bike : MonoBehaviour {
 			break;
 		}
 
-		//bug with crashing: needs to stay in top lane after crashing
-		//crashing, in the future we will need to move it past the ramp to the ground immediately after the ramp
-		//other crash states: shouldn't crash while landing at max left rotation in air, should crash at max right
-		//	also crashes if hits ramp weird...
-		if (crashed)
-		{
-			/*print ("crashed!");
-
-			Vector3 tempPos = bikePEO.transform.position;
-			Vector3 tempRot = Vector3.zero;
-			Vector3 tempVel = Vector3.zero;
-			Vector3 tempAcc = Vector3.zero;
-
-			//we will need to grab the curtime when it becomes state.crashed (float curTime = Time.time;)
-			//crash for 1 to 4 seconds, randomly
-			float crashTime = Random.Range (1,4);
-
-			if (Time.time < curTime + crashTime) {
-				bikePEO.UpdateAccel (tempAcc);
-				bikePEO.UpdateVel (tempVel);
-				tempPos.z = 2.25f;
-				bikePEO.transform.position = tempPos;
-				bikePEO.transform.eulerAngles = tempRot;
-			}
-			else {
-				crashed = false;
-			}*/
+		//crashing
+		//implement ramp crashes: move it past the ramp to the ground immediately after the ramp
+		if (crashed) {
 			crash();
 		}
 
@@ -288,11 +264,11 @@ public class Bike : MonoBehaviour {
 			if (curRotIn == RotInput.LEFT && bikePEO.transform.eulerAngles.z <= maxAngle && (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Z))){
 				bikePEO.transform.Rotate(Vector3.forward * (rotSpeed * Time.deltaTime));
 			}
-			else if (bikePEO.transform.eulerAngles.z >= maxAngle && bikePEO.transform.eulerAngles.z <= maxAngle + 4)
+			else if ((bikePEO.transform.eulerAngles.z >= maxAngle && bikePEO.transform.eulerAngles.z <= maxAngle + 4) || (bikePEO.transform.eulerAngles.z <= 360 - maxAngle && bikePEO.transform.eulerAngles.z >= 360 - maxAngle - 5))
 			{
 				crashed = true;
 				curTime = Time.time;
-			}
+			} 
 			else if (bikePEO.transform.eulerAngles.z >= maxAngle + 5)
 			{
 				/*Vector3 temp = bikePEO.transform.eulerAngles;
@@ -321,7 +297,7 @@ public class Bike : MonoBehaviour {
 				bikePEO.transform.eulerAngles = temp;
 			}
 
-			if (bikePEO.transform.eulerAngles.z >= 360-maxAngle || bikePEO.transform.eulerAngles.z <= maxAngle) {
+			if (bikePEO.transform.eulerAngles.z >= 360-maxAngle || bikePEO.transform.eulerAngles.z <= maxAngle - 1) {
 				if (curRotIn == RotInput.RIGHT) {
 					bikePEO.transform.Rotate(Vector3.back * (rotSpeed * Time.deltaTime));
 				}
