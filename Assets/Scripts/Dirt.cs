@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Dirt : MonoBehaviour {
-
+	public float maxSpeed = 3f;
 	// Use this for initialization
 	void Start () {
 	
@@ -12,4 +12,16 @@ public class Dirt : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	void OnTriggerStay(Collider other) {
+		PE_Obj bikePEO = other.GetComponent<PE_Obj> ();
+		
+		if (bikePEO == null)
+			return;
+
+		if (bikePEO.vel.x > maxSpeed) {
+			bikePEO.acc.x = -5f;
+		}
+	}
+
 }
