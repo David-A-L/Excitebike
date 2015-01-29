@@ -1,4 +1,4 @@
-﻿//move stumps further back in z direction
+//move stumps further back in z direction
 using UnityEngine;
 using System.Collections;
 
@@ -25,7 +25,6 @@ public class StumpCrafter : MonoBehaviour {
 		numStumps = 1000;
 		GameObject stump;
 		for (int i = 0; i < numStumps; i++){
-			print (numStumps);
 			stump = Instantiate (stumpPrefab) as GameObject;
 			//position stump
 			sPos.x += .8f;

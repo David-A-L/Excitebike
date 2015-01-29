@@ -18,7 +18,7 @@ public class BotWallContact : MonoBehaviour {
 	void OnTriggerStay(Collider other){
 		PE_Obj bikePEO = other.GetComponent<PE_Obj> ();
 		
-		if (Input.GetKey (KeyCode.DownArrow) && other.tag == "Bike")
+		if ((Input.GetKey (KeyCode.DownArrow) || Input.GetKey (KeyCode.S)) && other.tag == "Bike")
 		{
 			bikePEO.vel.z = 0f;
 			//tweak (add limiter)
@@ -27,10 +27,10 @@ public class BotWallContact : MonoBehaviour {
 			}
 			//update these values if we tweak bike.cs
 			else if (bikePEO.vel.x < wallSpeed) {
-				if (Input.GetKey (KeyCode.X)) {
+				if (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Period)) {
 					bikePEO.acc.x = 3.25f;
 				}
-				else if (Input.GetKey (KeyCode.Z)) {
+				else if (Input.GetKey (KeyCode.Z) || Input.GetKey (KeyCode.Comma)) {
 					bikePEO.acc.x = 5f;
 				}
 			}

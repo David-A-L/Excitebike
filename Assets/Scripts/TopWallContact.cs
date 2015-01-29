@@ -32,7 +32,7 @@ public class TopWallContact : MonoBehaviour {
 		if (bikePEO == null)
 			return;
 
-		if (Input.GetKey (KeyCode.UpArrow))
+		if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey (KeyCode.W))
 		{
 			bikePEO.vel.z = 0f;
 			if (bikePEO.vel.x > wallSpeed) {
@@ -40,10 +40,10 @@ public class TopWallContact : MonoBehaviour {
 			}
 			//update these values if we tweak bike.cs
 			else if (bikePEO.vel.x < wallSpeed) {
-				if (Input.GetKey (KeyCode.X)) {
+				if (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Period)) {
 					bikePEO.acc.x = 3.25f;
 				}
-				else if (Input.GetKey (KeyCode.Z)) {
+				else if (Input.GetKey (KeyCode.Z) || Input.GetKey (KeyCode.Comma)) {
 					bikePEO.acc.x = 5f;
 				}
 			}

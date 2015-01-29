@@ -96,30 +96,30 @@ public class Bike : MonoBehaviour {
 		//if -1 rotate left, if 1 rotate right, if 0 rotate towards parallel w/ surface
 		//float rotateInput = Input.GetAxis("Horizontal"); 
 		
-		if (Input.GetKey (KeyCode.X)) {
+		if (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Period)) {
 			curAccIn = AccInput.SLOW;
 		}
-		else if (Input.GetKey (KeyCode.Z)) {
+		else if (Input.GetKey (KeyCode.Z) || Input.GetKey (KeyCode.Comma)) {
 			curAccIn = AccInput.FAST;
 		}
 		else {
 			curAccIn = AccInput.NONE;
 		}
 
-		if (Input.GetKey (KeyCode.DownArrow)) {
+		if (Input.GetKey (KeyCode.DownArrow) || Input.GetKey (KeyCode.S)) {
 			curDirIn = DirInput.DOWN;
 		}
-		else if (Input.GetKey (KeyCode.UpArrow)) {
+		else if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey (KeyCode.W)) {
 			curDirIn = DirInput.UP;
 		}
 		else {
 			curDirIn = DirInput.NONE;
 		}
 
-		if (Input.GetKey (KeyCode.LeftArrow)) {
+		if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A)) {
 			curRotIn = RotInput.LEFT;
 		}
-		else if (Input.GetKey (KeyCode.RightArrow)) {
+		else if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.D)) {
 			curRotIn = RotInput.RIGHT;
 		}
 		else {
@@ -261,7 +261,7 @@ public class Bike : MonoBehaviour {
 		if (curState == State.ON_GROUND) {
 
 			//at a certain angle we need to crash, but for now we just max out
-			if (curRotIn == RotInput.LEFT && bikePEO.transform.eulerAngles.z <= maxAngle && (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Z))){
+				if (curRotIn == RotInput.LEFT && bikePEO.transform.eulerAngles.z <= maxAngle && (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Z) || Input.GetKey (KeyCode.Period) || Input.GetKey (KeyCode.Comma))){
 				bikePEO.transform.Rotate(Vector3.forward * (rotSpeed * Time.deltaTime));
 			}
 			else if ((bikePEO.transform.eulerAngles.z >= maxAngle && bikePEO.transform.eulerAngles.z <= maxAngle + 4) || (bikePEO.transform.eulerAngles.z <= 360 - maxAngle && bikePEO.transform.eulerAngles.z >= 360 - maxAngle - 5))

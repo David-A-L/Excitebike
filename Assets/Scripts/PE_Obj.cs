@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PE_Obj : MonoBehaviour {
@@ -52,7 +52,6 @@ public class PE_Obj : MonoBehaviour {
 
 	//display lap time??
 	void lapTime () {
-		print ("function called!");
 		
 		int minutes = (int)guiTime / 60;
 		int seconds = (int)guiTime % 60;
@@ -65,7 +64,6 @@ public class PE_Obj : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		//flash lap time in center of screen
 		if (this.tag == "Bike" && other.tag == "LapRamp") {
-			print("asdf");
 			guiTime = Time.time;
 			lapTime();
 			lapDisplay = true;
@@ -219,19 +217,14 @@ public class PE_Obj : MonoBehaviour {
 				}
 				cornerPos.y -= this.transform.lossyScale.y/2;
 				Vector3 rampVec = rampGO.transform.right;
-				//this code makes ramps harder to accelerate up (more realistic)
-				//vel = Vector3.Project(vel, rampVec);
-				//acc = Vector3.Project(acc, rampVec);
-				//this make ramp physics closer to the game's
-				vel = rampVec * vel.magnitude;
-				acc = rampVec * acc.magnitude;
+				vel = Vector3.Project(vel, rampVec);
+				acc = Vector3.Project(acc, rampVec);
 
 				//RayCasting from corner toward plane to get depth of penetration
 				Ray cornerRay = new Ray(cornerPos,rampGO.transform.up);
 				Debug.DrawRay(cornerPos, rampGO.transform.up * 100f);
 				RaycastHit hit = new RaycastHit();
 				if(!Physics.Raycast(cornerRay,out hit,100f)){
-					print ("Didn't hit anything");
 					return;
 				}
 				/*float dist = Mathf.Sqrt(transform.lossyScale.x*transform.lossyScale.x + transform.lossyScale.y*transform.lossyScale.y);
