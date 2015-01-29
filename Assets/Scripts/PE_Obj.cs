@@ -203,6 +203,10 @@ public class PE_Obj : MonoBehaviour {
 			case PE_Collider.plane:
 				thisBike.curState = Bike.State.ON_RAMP;
 
+				//rotation set to 0
+				Vector3 tempRot = Vector3.zero;
+				this.transform.eulerAngles = tempRot;
+
 				GameObject rampGO = that.gameObject;
 				if (rampGO.tag == "Ramp" || rampGO.tag == "LapRamp")
 					grav = PE_GravType.none;
