@@ -16,6 +16,10 @@ public class PE_Obj : MonoBehaviour {
 	public Vector3		pos0 = Vector3.zero;
 	public Vector3		pos1 = Vector3.zero;
 
+	public float guiTime;
+	public string textTime;
+	public bool lapDisplay = false;
+
 	//public PE_Dir		dir = PE_Dir.still;
 	
 	//public PE_Obj		ground = null; // Stores whether this is on the ground
@@ -38,9 +42,39 @@ public class PE_Obj : MonoBehaviour {
 	public void UpdateVel (Vector3 velIn){
 		vel = velIn;
 	}
-	
+
+	void OnGUI ()
+	{
+		if (lapDisplay == true) {
+			GUI.Label (new Rect (450, 100, 100, 1000), textTime);
+		}
+	}
+
+	//display lap time??
+	void lapTime () {
+		print ("function called!");
+		
+		int minutes = (int)guiTime / 60;
+		int seconds = (int)guiTime % 60;
+		int fracSec = (int)(guiTime * 100) % 100;
+		
+		textTime = string.Format ("{0:00}:{1:00}:{2:00}", minutes, seconds, fracSec);
+		//GUI.Label (new Rect (300, 250, 100, 1000), textTime); 
+	}
 	
 	void OnTriggerEnter(Collider other) {
+		//flash lap time in center of screen
+		if (this.tag == "Bike" && other.tag == "LapRamp") {
+			print("asdf");
+			guiTime = Time.time;
+			lapTime();
+			lapDisplay = true;
+		}
+		if (Time.time > guiTime + 4f) {
+			//print("no more lap");
+			lapDisplay = false;
+		}
+
 		// Ignore collisions of still objects
 		if (still) return;
 		
@@ -172,7 +206,7 @@ public class PE_Obj : MonoBehaviour {
 				thisBike.curState = Bike.State.ON_RAMP;
 
 				GameObject rampGO = that.gameObject;
-				if (rampGO.tag == "Ramp")
+				if (rampGO.tag == "Ramp" || rampGO.tag == "LapRamp")
 					grav = PE_GravType.none;
 
 				Vector3 cornerPos = this.gameObject.transform.position;
