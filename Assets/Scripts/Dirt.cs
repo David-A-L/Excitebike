@@ -20,7 +20,7 @@ public class Dirt : MonoBehaviour {
 			return;
 
 		if (bikePEO.vel.x > maxSpeed) {
-			bikePEO.acc.x = -5f;
+			bikePEO.acc.x = -8f;
 		}
 	}
 
