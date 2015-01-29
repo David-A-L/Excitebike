@@ -6,7 +6,6 @@ using System.Collections;
 public class Timer : MonoBehaviour {
 	private float startTime;
 	public string textTime;
-	bool numLaps = 0;
 
 	void Awake () {
 		startTime = Time.time;
@@ -23,8 +22,6 @@ public class Timer : MonoBehaviour {
 		GUI.Label (new Rect (800, 550, 100, 1000), textTime); 
 	}
 
-	//display lap time after lap and finish
-	void OnTriggerEnter() {
 
 
 	// Use this for initialization
