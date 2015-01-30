@@ -113,7 +113,9 @@ public class Bike : MonoBehaviour {
 		Vector3 tempAcc = Vector3.zero;
 		
 		//tweak this time based on the sound
-		float crashTime = 5f;
+		//should be 4 seconds
+		//modify the sound to match this
+		float crashTime = 4f;
 		
 		if (Time.time < curTime + crashTime) {
 			bikePEO.UpdateAccel (tempAcc);
