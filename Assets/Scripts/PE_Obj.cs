@@ -19,7 +19,8 @@ public class PE_Obj : MonoBehaviour {
 	public float guiTime;
 	public string textTime;
 	public bool lapDisplay = false;
-
+    
+	Vector3 lastRampAngle = Vector3.zero;
 	//public PE_Dir		dir = PE_Dir.still;
 	
 	//public PE_Obj		ground = null; // Stores whether this is on the ground
@@ -32,7 +33,7 @@ public class PE_Obj : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
 	public void UpdateAccel (Vector3 accIn){
@@ -236,6 +237,7 @@ public class PE_Obj : MonoBehaviour {
 				Vector3 temp = transform.position;
 				temp += rampGO.transform.up * (hit.distance);
 				transform.position = temp;
+				lastRampAngle = rampGO.transform.eulerAngles;
 				break;
 
 			}
@@ -255,6 +257,7 @@ public class PE_Obj : MonoBehaviour {
 		if (other.tag == "RampBoost") {
 			Bike bScript = this.gameObject.GetComponent<Bike>();
 			bScript.curState = Bike.State.IN_AIR;
+			this.transform.eulerAngles = lastRampAngle;
 		}
 		grav = PE_GravType.constant;
 	}
