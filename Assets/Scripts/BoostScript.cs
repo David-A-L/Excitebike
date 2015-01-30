@@ -23,10 +23,11 @@ public class BoostScript : MonoBehaviour {
 		if (otherPEO.vel.magnitude < minVel)
 			return;
 		//if holding left, boost will be applied as upward lift
-		if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A))
+		if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A)) {
 			otherPEO.vel.y += otherPEO.vel.magnitude * power;
+		}
 		else 
-			otherPEO.vel += otherPEO.vel * power;
+			otherPEO.vel += this.transform.right * otherPEO.vel.magnitude * power;
 	}
 
 }
