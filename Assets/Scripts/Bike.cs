@@ -220,7 +220,7 @@ public class Bike : MonoBehaviour {
 			crash();
 		}
 		else if (overheated){
-			//overheat()
+			overheat();
 		}
 		else {
 		if (curState == State.ON_GROUND || curState == State.ON_RAMP) {

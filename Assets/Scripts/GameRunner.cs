@@ -32,10 +32,9 @@ public class GameRunner : MonoBehaviour {
 			int goalTemp = restingTemp;
 			int tempChange = 0;
 			if (temp >= maxTemp) {
-				//bikeScript.overheated = true;
-				//bikeScript.overheat ();
+				bikeScript.overheated = true;
 			}
-			else if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.Comma)){
+		    if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.Comma)){
 				goalTemp = maxTemp + 10;
 				tempChange = fastHeat;
 			}
