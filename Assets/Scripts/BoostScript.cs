@@ -26,7 +26,7 @@ public class BoostScript : MonoBehaviour {
 		if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A))
 			otherPEO.vel.y += otherPEO.vel.magnitude * power;
 		else 
-			otherPEO.vel += otherPEO.vel * power;
+			otherPEO.vel += this.transform.right * otherPEO.vel.magnitude * power;
 	}
 
 }

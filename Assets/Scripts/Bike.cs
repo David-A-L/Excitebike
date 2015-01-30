@@ -42,9 +42,9 @@ public class Bike : MonoBehaviour {
 	public State curState = State.ON_GROUND;
 
 	//max speed is same regardless of fast or slow accel
-	float maxSpeed = 8f;
-	float maxAirSpeed = 8f;
-	float maxAngle = 45f;
+	public float maxSpeed = 8f;
+	public float maxAirSpeed = 8f;
+	public float maxAngle = 45f;
 
 	public Vector3 newPosition = Vector3.zero;
 	//public float transitionTime = 1f;
