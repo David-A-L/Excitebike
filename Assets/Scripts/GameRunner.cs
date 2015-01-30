@@ -19,25 +19,22 @@ public class GameRunner : MonoBehaviour {
 		temp = restingTemp;
 		bikeScript = playerBike.GetComponent<Bike> ();
 	}
-	void Update(){
-		if (temp >= maxTemp) {
-			bikeScript.overheated = true;
-		}
-	}
+	
 
 	void FixedUpdate () {
 		if (bikeScript.crashed) {
 			temp = (temp+cooling < restingTemp)? restingTemp: temp+cooling;
 		}
 		else if (bikeScript.overheated){
-			print ("GameRunner: overheated");
-			//temp = restingTemp;
+			temp = restingTemp;
 		}
 		else {
 			int goalTemp = restingTemp;
 			int tempChange = 0;
 			if (temp >= maxTemp) {
 				bikeScript.overheated = true;
+				bikeScript.curTime = Time.time;
+				//bikeScript.overheat ();
 			}
 			else if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.Comma)){
 				goalTemp = maxTemp + 10;
@@ -58,7 +55,7 @@ public class GameRunner : MonoBehaviour {
 				temp = (temp+tempChange < goalTemp)? temp + tempChange: goalTemp;
 			}
 		}
-		//print (temp);
+		print (temp);
 	}
 	
 
