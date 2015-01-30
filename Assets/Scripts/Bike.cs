@@ -61,6 +61,7 @@ public class Bike : MonoBehaviour {
 
 	public float curTime = 0f;
 	public bool crashed = false;
+	public bool overheated = false;
 
 	public int frame = 0;
 
@@ -191,6 +192,9 @@ public class Bike : MonoBehaviour {
 		//implement ramp crashes: move it past the ramp to the ground immediately after the ramp
 		if (crashed) {
 			crash();
+		}
+		else if (overheated){
+			//overheat()
 		}
 		else {
 		if (curState == State.ON_GROUND || curState == State.ON_RAMP) {
