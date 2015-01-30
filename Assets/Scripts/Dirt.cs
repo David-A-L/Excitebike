@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Dirt : MonoBehaviour {
-	public float maxSpeed = 3f;
+	public float maxSpeed = 5f;
 	// Use this for initialization
 	void Start () {
 	
@@ -20,7 +20,7 @@ public class Dirt : MonoBehaviour {
 			return;
 
 		if (bikePEO.vel.x > maxSpeed) {
-			bikePEO.acc.x = -8f;
+			bikePEO.acc.x = -50f;
 		}
 	}
 
