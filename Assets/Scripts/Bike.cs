@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//test
-
 public class Bike : MonoBehaviour {
 
 	public AudioClip idle;
 	public AudioClip slowAccelSound;
 	public AudioClip fastAccelSound;
 	public AudioClip crashSound;
+	public AudioClip overheatSound;
 
 	//two kinds of ramp, can move on one but not the other
 	public enum State {
@@ -100,6 +99,33 @@ public class Bike : MonoBehaviour {
 			crashed = false;
 		}
 	}
+
+	void overheat() {
+		PE_Obj bikePEO = this.GetComponent<PE_Obj> ();
+
+		//this has to play only once
+		audio.PlayOneShot (overheatSound);
+		
+		Vector3 tempPos = bikePEO.transform.position;
+		Vector3 tempRot = Vector3.zero;
+		Vector3 tempVel = Vector3.zero;
+		Vector3 tempAcc = Vector3.zero;
+		
+		//tweak this time based on the sound
+		float crashTime = 5f;
+		
+		if (Time.time < curTime + crashTime) {
+			bikePEO.UpdateAccel (tempAcc);
+			bikePEO.UpdateVel (tempVel);
+			tempPos.z = 2.75f;
+			bikePEO.transform.position = tempPos;
+			bikePEO.transform.eulerAngles = tempRot;
+		}
+		else {
+			overheated = false;
+		}
+	}
+
 
 	void Update(){
 		//should return -1 or 1, gives us direction based on wasd or arrow key input 
