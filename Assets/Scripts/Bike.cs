@@ -6,6 +6,8 @@ using System.Collections;
 public class Bike : MonoBehaviour {
 
 	public AudioClip idle;
+	public AudioClip slowAccelSound;
+	public AudioClip fastAccelSound;
 
 	//two kinds of ramp, can move on one but not the other
 	public enum State {
@@ -59,7 +61,7 @@ public class Bike : MonoBehaviour {
 	public float curTime = 0f;
 	public bool crashed = false;
 
-	public int i = 0;
+	public int frame = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -102,15 +104,21 @@ public class Bike : MonoBehaviour {
 
 		if (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Period)) {
 			curAccIn = AccInput.SLOW;
+			if (!crashed && frame % 30 == 0) { 
+			   audio.PlayOneShot(slowAccelSound);
+			}
 		}
 		else if (Input.GetKey (KeyCode.Z) || Input.GetKey (KeyCode.Comma)) {
+			if (!crashed && frame % 30 == 0) { 
+				audio.PlayOneShot(fastAccelSound);
+			}
 			curAccIn = AccInput.FAST;
 		}
 		else {
 			curAccIn = AccInput.NONE;
-			if (i % 60 == 0) audio.PlayOneShot(idle);
-			i++;
+			if (frame % 60 == 0) audio.PlayOneShot(idle);
 		}
+		frame++;
 
 		if (Input.GetKey (KeyCode.DownArrow) || Input.GetKey (KeyCode.S)) {
 			curDirIn = DirInput.DOWN;
