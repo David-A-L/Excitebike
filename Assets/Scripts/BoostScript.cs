@@ -19,6 +19,9 @@ public class BoostScript : MonoBehaviour {
 
 		PE_Obj otherPEO = other.GetComponent<PE_Obj> ();
 
+		//no boosting if falling onto the ramp
+		if (otherPEO.vel.y < 0)
+			return;
 		//if moving too slow, no boost applied
 		if (otherPEO.vel.magnitude < minVel)
 			return;

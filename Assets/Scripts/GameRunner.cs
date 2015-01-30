@@ -61,5 +61,6 @@ public class GameRunner : MonoBehaviour {
 
 	public void reduceTemp(){
 		temp += tempReduce;
+		temp = temp > restingTemp ? temp : restingTemp; 
 	}
 }
