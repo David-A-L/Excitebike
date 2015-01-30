@@ -75,7 +75,9 @@ public class Bike : MonoBehaviour {
 	void crash() {
 		PE_Obj bikePEO = this.GetComponent<PE_Obj> ();
 
-		audio.PlayOneShot(crashSound);
+		if (frame % 20 == 0) {
+			audio.PlayOneShot (crashSound);
+		}
 		
 		Vector3 tempPos = bikePEO.transform.position;
 		Vector3 tempRot = Vector3.zero;
