@@ -55,7 +55,7 @@ public class GameRunner : MonoBehaviour {
 				temp = (temp+tempChange < goalTemp)? temp + tempChange: goalTemp;
 			}
 		}
-		print (temp);
+		//print (temp);
 	}
 	
 
