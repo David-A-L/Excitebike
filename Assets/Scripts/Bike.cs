@@ -108,7 +108,7 @@ public class Bike : MonoBehaviour {
 				audio.PlayOneShot(slowAccelSound);
 				audio.Play();
 			}*/
-			if (!crashed && frame % 30 == 0) {
+			if (!crashed && frame % 60 == 0) {
 				audio.PlayOneShot(slowAccelSound);
 			}
 		}
@@ -118,7 +118,7 @@ public class Bike : MonoBehaviour {
 				audio.Play();
 			}*/
 			curAccIn = AccInput.FAST;
-			if (!crashed && frame % 30 == 0) {
+			if (!crashed && frame % 60 == 0) {
 				audio.PlayOneShot(fastAccelSound);
 			}
 		}
@@ -128,7 +128,7 @@ public class Bike : MonoBehaviour {
 				audio.PlayOneShot(idle);
 				audio.Play ();
 			}*/
-			if (!crashed && frame % 30 == 0) {
+			if (!crashed && frame % 60 == 0) {
 				audio.PlayOneShot(idle);
 			}
 		}
