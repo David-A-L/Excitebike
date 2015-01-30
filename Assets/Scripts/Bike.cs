@@ -5,6 +5,8 @@ using System.Collections;
 
 public class Bike : MonoBehaviour {
 
+	public AudioClip idle;
+
 	//two kinds of ramp, can move on one but not the other
 	public enum State {
 		IN_AIR,
@@ -57,6 +59,8 @@ public class Bike : MonoBehaviour {
 	public float curTime = 0f;
 	public bool crashed = false;
 
+	public int i = 0;
+
 	// Use this for initialization
 	void Start () {
 		PE_Obj bikePEO = this.GetComponent<PE_Obj> ();
@@ -68,7 +72,7 @@ public class Bike : MonoBehaviour {
 	void crash() {
 		PE_Obj bikePEO = this.GetComponent<PE_Obj> ();
 
-		print ("crashed!");
+		//print ("crashed!");
 		
 		Vector3 tempPos = bikePEO.transform.position;
 		Vector3 tempRot = Vector3.zero;
@@ -104,6 +108,8 @@ public class Bike : MonoBehaviour {
 		}
 		else {
 			curAccIn = AccInput.NONE;
+			if (i % 60 == 0) audio.PlayOneShot(idle);
+			i++;
 		}
 
 		if (Input.GetKey (KeyCode.DownArrow) || Input.GetKey (KeyCode.S)) {
