@@ -104,19 +104,33 @@ public class Bike : MonoBehaviour {
 
 		if (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Period)) {
 			curAccIn = AccInput.SLOW;
-			if (!crashed && frame % 30 == 0) { 
-			   audio.PlayOneShot(slowAccelSound);
+			/*if (!crashed && !audio.isPlaying) {
+				audio.PlayOneShot(slowAccelSound);
+				audio.Play();
+			}*/
+			if (!crashed && frame % 30 == 0) {
+				audio.PlayOneShot(slowAccelSound);
 			}
 		}
 		else if (Input.GetKey (KeyCode.Z) || Input.GetKey (KeyCode.Comma)) {
-			if (!crashed && frame % 30 == 0) { 
+			/*if (!crashed && !audio.isPlaying) { 
+				audio.PlayOneShot(fastAccelSound);
+				audio.Play();
+			}*/
+			curAccIn = AccInput.FAST;
+			if (!crashed && frame % 30 == 0) {
 				audio.PlayOneShot(fastAccelSound);
 			}
-			curAccIn = AccInput.FAST;
 		}
 		else {
 			curAccIn = AccInput.NONE;
-			if (frame % 60 == 0) audio.PlayOneShot(idle);
+			/*if (!crashed && !audio.isPlaying) {
+				audio.PlayOneShot(idle);
+				audio.Play ();
+			}*/
+			if (!crashed && frame % 30 == 0) {
+				audio.PlayOneShot(idle);
+			}
 		}
 		frame++;
 
