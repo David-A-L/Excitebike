@@ -43,7 +43,7 @@ public class Bike : MonoBehaviour {
 	//max speed is same regardless of fast or slow accel
 	public float maxSpeed = 8f;
 	public float maxAirSpeed = 8f;
-	public float maxAngle = 45f;
+	public float maxAngle = 80f;
 
 	public Vector3 newPosition = Vector3.zero;
 	//public float transitionTime = 1f;
@@ -57,6 +57,7 @@ public class Bike : MonoBehaviour {
 	float up = 5f;
 	float down = -5f;
 	float stay = 0f;
+	public float lerpTime = .25f;
 
 	public float curTime = 0f;
 	public bool crashed = false;
@@ -217,7 +218,7 @@ public class Bike : MonoBehaviour {
 			crash();
 		}
 		else if (overheated){
-			print ("Bike: run overheat()");
+			//print ("Bike: run overheat()");
 			overheat();
 		}
 		else {
@@ -266,7 +267,7 @@ public class Bike : MonoBehaviour {
 				if (bikePEO.transform.position.z > 2.25) {
 					//set bike position to go down until it reaches 2.25
 					newPosition = new Vector3(bikePEO.transform.position.x, bikePEO.transform.position.y, 2.25f);
-					bikePEO.transform.position = Vector3.Lerp(bikePEO.transform.position, newPosition, .35f);
+					bikePEO.transform.position = Vector3.Lerp(bikePEO.transform.position, newPosition, lerpTime);
 					bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0f));
 					
 				}
@@ -279,7 +280,7 @@ public class Bike : MonoBehaviour {
 						//go down to .75
 						newPosition	= new Vector3(bikePEO.transform.position.x, bikePEO.transform.position.y, .75f);
 					}
-					bikePEO.transform.position = Vector3.Lerp(bikePEO.transform.position, newPosition, .35f);
+					bikePEO.transform.position = Vector3.Lerp(bikePEO.transform.position, newPosition, lerpTime);
 					bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0f));
 				}
 				else if (bikePEO.transform.position.z <= .75f && bikePEO.transform.position.z > -.75f) {
@@ -289,7 +290,7 @@ public class Bike : MonoBehaviour {
 					else if (prevDirIn == DirInput.DOWN) {
 						newPosition	= new Vector3(bikePEO.transform.position.x, bikePEO.transform.position.y, -.75f);
 					}
-					bikePEO.transform.position = Vector3.Lerp(bikePEO.transform.position, newPosition, .35f);
+					bikePEO.transform.position = Vector3.Lerp(bikePEO.transform.position, newPosition, lerpTime);
 					bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0f));
 				}
 				else if (bikePEO.transform.position.z <= -.75f && bikePEO.transform.position.z > -2.25f) {
@@ -299,12 +300,12 @@ public class Bike : MonoBehaviour {
 					else if (prevDirIn == DirInput.DOWN) {
 						newPosition	= new Vector3(bikePEO.transform.position.x, bikePEO.transform.position.y, -2.25f);
 					}
-					bikePEO.transform.position = Vector3.Lerp(bikePEO.transform.position, newPosition, .35f);
+					bikePEO.transform.position = Vector3.Lerp(bikePEO.transform.position, newPosition, lerpTime);
 					bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0f));
 				}
 				else {
 					newPosition = new Vector3(bikePEO.transform.position.x, bikePEO.transform.position.y, -2.25f);
-					bikePEO.transform.position = Vector3.Lerp(bikePEO.transform.position, newPosition, .35f);
+					bikePEO.transform.position = Vector3.Lerp(bikePEO.transform.position, newPosition, lerpTime);
 					bikePEO.UpdateVel (new Vector3 (bikePEO.vel.x, bikePEO.vel.y, 0f));
 
 				}
@@ -313,15 +314,16 @@ public class Bike : MonoBehaviour {
 
 		//wheelie
 		if (curState == State.ON_GROUND) {
-			if (curRotIn == RotInput.LEFT && bikePEO.transform.eulerAngles.z <= maxAngle && (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Z) || Input.GetKey (KeyCode.Period) || Input.GetKey (KeyCode.Comma))){
+			if (curRotIn == RotInput.LEFT && bikePEO.transform.eulerAngles.z <= maxAngle + 25 && (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Z) || Input.GetKey (KeyCode.Period) || Input.GetKey (KeyCode.Comma))){
 				bikePEO.transform.Rotate(Vector3.forward * (rotSpeed * Time.deltaTime));
 			}
-			else if ((bikePEO.transform.eulerAngles.z >= maxAngle && bikePEO.transform.eulerAngles.z <= maxAngle + 4) || (bikePEO.transform.eulerAngles.z <= 360 - maxAngle && bikePEO.transform.eulerAngles.z >= 360 - maxAngle - 5))
+			else if ((bikePEO.transform.eulerAngles.z >= maxAngle + 25 && bikePEO.transform.eulerAngles.z <= maxAngle + 25 + 4) || (bikePEO.transform.eulerAngles.z <= 360 - maxAngle && bikePEO.transform.eulerAngles.z >= 360 - maxAngle - 5))
 			{
+				print (bikePEO.transform.eulerAngles.z);
 				crashed = true;
 				curTime = Time.time;
 			} 
-			else if (bikePEO.transform.eulerAngles.z >= maxAngle + 5)
+			else if (bikePEO.transform.eulerAngles.z >= maxAngle + 25 + 5)
 			{
 				bikePEO.transform.Rotate(Vector3.forward * (rotSpeed * Time.deltaTime));
 			}
