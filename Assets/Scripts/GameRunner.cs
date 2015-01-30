@@ -56,6 +56,8 @@ public class GameRunner : MonoBehaviour {
 			}
 		}
 		//print (temp);
+		//anchor box
+		//make a red box, correspond the size of the box to temp
 	}
 	
 
