@@ -95,7 +95,7 @@ public class Bike : MonoBehaviour {
 		//should return -1 or 1, gives us direction based on wasd or arrow key input 
 		//if -1 rotate left, if 1 rotate right, if 0 rotate towards parallel w/ surface
 		//float rotateInput = Input.GetAxis("Horizontal"); 
-		
+
 		if (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Period)) {
 			curAccIn = AccInput.SLOW;
 		}
@@ -133,6 +133,14 @@ public class Bike : MonoBehaviour {
 	void FixedUpdate (){
 		PE_Obj bikePEO = this.GetComponent<PE_Obj> ();
 
+		//push the bike forward (cheat) if it gets stuck
+		//leave in the game as a "god mode"
+		if (Input.GetKey (KeyCode.I)) {
+			Vector3 tempPos = bikePEO.transform.position;
+			tempPos.x += 2;
+			bikePEO.transform.position = tempPos;
+		}
+
 		float accX = 0f;
 		float velZ = 0f;
 
@@ -165,7 +173,6 @@ public class Bike : MonoBehaviour {
 		if (crashed) {
 			crash();
 		}
-
 		else {
 		if (curState == State.ON_GROUND || curState == State.ON_RAMP) {
 			bikePEO.UpdateAccel (new Vector3 (accX, 0, 0));
@@ -259,9 +266,7 @@ public class Bike : MonoBehaviour {
 
 		//wheelie
 		if (curState == State.ON_GROUND) {
-
-			//at a certain angle we need to crash, but for now we just max out
-				if (curRotIn == RotInput.LEFT && bikePEO.transform.eulerAngles.z <= maxAngle && (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Z) || Input.GetKey (KeyCode.Period) || Input.GetKey (KeyCode.Comma))){
+			if (curRotIn == RotInput.LEFT && bikePEO.transform.eulerAngles.z <= maxAngle && (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Z) || Input.GetKey (KeyCode.Period) || Input.GetKey (KeyCode.Comma))){
 				bikePEO.transform.Rotate(Vector3.forward * (rotSpeed * Time.deltaTime));
 			}
 			else if ((bikePEO.transform.eulerAngles.z >= maxAngle && bikePEO.transform.eulerAngles.z <= maxAngle + 4) || (bikePEO.transform.eulerAngles.z <= 360 - maxAngle && bikePEO.transform.eulerAngles.z >= 360 - maxAngle - 5))
@@ -271,9 +276,6 @@ public class Bike : MonoBehaviour {
 			} 
 			else if (bikePEO.transform.eulerAngles.z >= maxAngle + 5)
 			{
-				/*Vector3 temp = bikePEO.transform.eulerAngles;
-				temp.z = 0;
-				bikePEO.transform.eulerAngles = temp;*/
 				bikePEO.transform.Rotate(Vector3.forward * (rotSpeed * Time.deltaTime));
 			}
 			else if (bikePEO.transform.eulerAngles.z >= 0) {
@@ -307,8 +309,21 @@ public class Bike : MonoBehaviour {
 			}
 		}
 
-				
+		if (curState == State.ON_RAMP) {
+			if ((bikePEO.transform.eulerAngles.z >= maxAngle && bikePEO.transform.eulerAngles.z <= maxAngle + 4) || (bikePEO.transform.eulerAngles.z <= 360 - maxAngle && bikePEO.transform.eulerAngles.z >= 360 - maxAngle - 5))
+			{
+				Vector3 tempPos = bikePEO.transform.position;
+				tempPos.x += 2;
+				bikePEO.transform.position = tempPos;
+				crashed = true;
+				curTime = Time.time;
+			} 
 			
+			//rotation set to 0
+			Vector3 tempRot = Vector3.zero;
+			bikePEO.transform.eulerAngles = tempRot;
+		}
+
 		//TODO: call update temp based on input
 		}
 
