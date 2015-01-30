@@ -104,7 +104,7 @@ public class Bike : MonoBehaviour {
 		PE_Obj bikePEO = this.GetComponent<PE_Obj> ();
 
 		//this has to play only once
-		audio.PlayOneShot (overheatSound);
+		//audio.PlayOneShot (overheatSound);
 		
 		Vector3 tempPos = bikePEO.transform.position;
 		Vector3 tempRot = Vector3.zero;
@@ -219,8 +219,8 @@ public class Bike : MonoBehaviour {
 		if (crashed) {
 			crash();
 		}
-		else if (overheated){
-			//overheat()
+		else if (overheated) {
+			overheat ();
 		}
 		else {
 		if (curState == State.ON_GROUND || curState == State.ON_RAMP) {
