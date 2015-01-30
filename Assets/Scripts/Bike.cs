@@ -8,6 +8,7 @@ public class Bike : MonoBehaviour {
 	public AudioClip idle;
 	public AudioClip slowAccelSound;
 	public AudioClip fastAccelSound;
+	public AudioClip crashSound;
 
 	//two kinds of ramp, can move on one but not the other
 	public enum State {
@@ -74,7 +75,7 @@ public class Bike : MonoBehaviour {
 	void crash() {
 		PE_Obj bikePEO = this.GetComponent<PE_Obj> ();
 
-		//print ("crashed!");
+		audio.PlayOneShot(crashSound);
 		
 		Vector3 tempPos = bikePEO.transform.position;
 		Vector3 tempRot = Vector3.zero;
@@ -104,19 +105,11 @@ public class Bike : MonoBehaviour {
 
 		if (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Period)) {
 			curAccIn = AccInput.SLOW;
-			/*if (!crashed && !audio.isPlaying) {
-				audio.PlayOneShot(slowAccelSound);
-				audio.Play();
-			}*/
 			if (!crashed && frame % 60 == 0) {
 				audio.PlayOneShot(slowAccelSound);
 			}
 		}
 		else if (Input.GetKey (KeyCode.Z) || Input.GetKey (KeyCode.Comma)) {
-			/*if (!crashed && !audio.isPlaying) { 
-				audio.PlayOneShot(fastAccelSound);
-				audio.Play();
-			}*/
 			curAccIn = AccInput.FAST;
 			if (!crashed && frame % 60 == 0) {
 				audio.PlayOneShot(fastAccelSound);
@@ -124,11 +117,7 @@ public class Bike : MonoBehaviour {
 		}
 		else {
 			curAccIn = AccInput.NONE;
-			/*if (!crashed && !audio.isPlaying) {
-				audio.PlayOneShot(idle);
-				audio.Play ();
-			}*/
-			if (!crashed && frame % 60 == 0) {
+			if (frame % 60 == 0) {
 				audio.PlayOneShot(idle);
 			}
 		}
