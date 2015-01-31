@@ -101,6 +101,12 @@ public class Bike : MonoBehaviour {
 		}
 	}
 
+	void OnGUI () {
+		if (overheated) {
+			GUI.Label (new Rect (400, 100, 100, 1000), "Over Heat"); 
+		}
+	}
+
 	void overheat() {
 		PE_Obj bikePEO = this.GetComponent<PE_Obj> ();
 
