@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Dirt : MonoBehaviour {
-	public float maxSpeed = 5f;
+	public float maxSpeed = 7f;
 	// Use this for initialization
 	void Start () {
 	
