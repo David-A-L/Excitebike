@@ -13,6 +13,7 @@ public class GameRunner : MonoBehaviour {
 	public int slowHeat = 1;
 	public Bike bikeScript;
 	public GameObject playerBike;
+	public GameObject tempMeter;
 	// Use this for initialization
 	void Start () {
 		
@@ -58,6 +59,17 @@ public class GameRunner : MonoBehaviour {
 		//print (temp);
 		//anchor box
 		//make a red box, correspond the size of the box to temp
+		tempMeter = GameObject.Find ("TempBar");
+		Vector3 tempSize = Vector3.zero;
+		tempSize.x = temp / 100;
+		tempSize.y = .01f;
+		tempSize.z = 2.139454f;
+		print (tempSize.x);
+		print (tempSize.y);
+		print (tempSize.z);
+		//print (tempSize.x);
+		tempMeter.transform.localScale = tempSize;
+
 	}
 	
 
