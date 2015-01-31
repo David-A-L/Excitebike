@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//should take 7 seconds to overheat (while holding down fast accel) instead of 9
+//boost pads should reset temp to default
+
 public class GameRunner : MonoBehaviour {
 
 	public int temp;
@@ -56,20 +59,20 @@ public class GameRunner : MonoBehaviour {
 				temp = (temp+tempChange < goalTemp)? temp + tempChange: goalTemp;
 			}
 		}
-		//print (temp);
-		//anchor box
-		//make a red box, correspond the size of the box to temp
+
 		tempMeter = GameObject.Find ("TempBar");
+		//scaling the tempmeter to match the level of overheat
 		Vector3 tempSize = Vector3.zero;
-		tempSize.x = temp / 100;
+		tempSize.x = temp / 250f;
 		tempSize.y = .01f;
 		tempSize.z = 2.139454f;
-		print (tempSize.x);
-		print (tempSize.y);
-		print (tempSize.z);
-		//print (tempSize.x);
 		tempMeter.transform.localScale = tempSize;
 
+		print (tempMeter.transform.localPosition.x);
+		//moving it forward a little bit so it only "grows to the right"
+		Vector3 tempPos = tempMeter.transform.localPosition;
+		tempPos.x = -1.12f + tempMeter.transform.localScale.x / 2;
+		tempMeter.transform.localPosition = tempPos;
 	}
 	
 
