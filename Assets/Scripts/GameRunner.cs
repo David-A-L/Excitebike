@@ -5,7 +5,7 @@ using System.Collections;
 //boost pads should reset temp to default
 
 public class GameRunner : MonoBehaviour {
-
+	
 	public int temp;
 	public int restingTemp = 100;
 	public int mediumTemp = 600;
@@ -24,7 +24,7 @@ public class GameRunner : MonoBehaviour {
 		bikeScript = playerBike.GetComponent<Bike> ();
 	}
 	
-
+	
 	void FixedUpdate () {
 		if (bikeScript.crashed) {
 			temp = (temp+cooling < restingTemp)? restingTemp: temp+cooling;
@@ -51,7 +51,7 @@ public class GameRunner : MonoBehaviour {
 			else {
 				goalTemp = restingTemp;
 			}
-
+			
 			if (temp > goalTemp){
 				temp = (temp+cooling < goalTemp)? goalTemp: temp+cooling;
 			}
@@ -59,7 +59,7 @@ public class GameRunner : MonoBehaviour {
 				temp = (temp+tempChange < goalTemp)? temp + tempChange: goalTemp;
 			}
 		}
-
+		
 		tempMeter = GameObject.Find ("TempBar");
 		//scaling the tempmeter to match the level of overheat
 		Vector3 tempSize = Vector3.zero;
@@ -67,7 +67,7 @@ public class GameRunner : MonoBehaviour {
 		tempSize.y = .01f;
 		tempSize.z = 2.139454f;
 		tempMeter.transform.localScale = tempSize;
-
+		
 		print (tempMeter.transform.localPosition.x);
 		//moving it forward a little bit so it only "grows to the right"
 		Vector3 tempPos = tempMeter.transform.localPosition;
@@ -75,7 +75,7 @@ public class GameRunner : MonoBehaviour {
 		tempMeter.transform.localPosition = tempPos;
 	}
 	
-
+	
 	public void reduceTemp(){
 		temp += tempReduce;
 		temp = temp > restingTemp ? temp : restingTemp; 
