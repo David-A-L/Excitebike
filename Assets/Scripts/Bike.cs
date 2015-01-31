@@ -365,6 +365,7 @@ public class Bike : MonoBehaviour {
 			{
 				Vector3 tempPos = bikePEO.transform.position;
 				tempPos.x += 2;
+				tempPos.y += 3;
 				bikePEO.transform.position = tempPos;
 				crashed = true;
 				curTime = Time.time;

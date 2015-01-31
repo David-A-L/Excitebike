@@ -36,6 +36,13 @@ public class GameRunner : MonoBehaviour {
 			int goalTemp = restingTemp;
 			int tempChange = 0;
 			if (temp >= maxTemp) {
+				if (bikeScript.curState == Bike.State.ON_RAMP) {
+					Vector3 bikePos = playerBike.transform.position;
+					bikePos.x += 2;
+					bikePos.y += 3;
+					playerBike.transform.position = bikePos;
+				}
+
 				bikeScript.overheated = true;
 				bikeScript.curTime = Time.time;
 				//bikeScript.overheat ();
