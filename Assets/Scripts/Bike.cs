@@ -34,6 +34,7 @@ public class Bike : MonoBehaviour {
 		NONE
 	}
 
+	public bool raceStarted = false;
 	public AccInput curAccIn = AccInput.NONE;
 	public DirInput curDirIn = DirInput.NONE;
 	public DirInput prevDirIn = DirInput.NONE;
@@ -183,6 +184,9 @@ public class Bike : MonoBehaviour {
 	}
 
 	void FixedUpdate (){
+		if (!raceStarted)
+			return;
+
 		PE_Obj bikePEO = this.GetComponent<PE_Obj> ();
 
 		//push the bike forward (cheat) if it gets stuck
