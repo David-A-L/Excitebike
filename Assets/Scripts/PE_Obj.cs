@@ -19,6 +19,10 @@ public class PE_Obj : MonoBehaviour {
 	public float guiTime;
 	public string textTime;
 	public bool lapDisplay = false;
+	public float landingEase = 3f;
+	public float bouncePower = .3f;
+	public float bounceSlow = .1f;
+	public float minBounceVel = 5f;
     
 	Vector3 lastRampAngle = Vector3.zero;
 	//public PE_Dir		dir = PE_Dir.still;
@@ -130,6 +134,13 @@ public class PE_Obj : MonoBehaviour {
 			
 		case PE_Collider.aabb:
 			//Bike thisBike = this.GetComponent<Bike>();
+			bool bounce = false;
+			float bounceVel = -vel.y * bouncePower;
+			if (thisBike.curState == Bike.State.IN_AIR && vel.y < 0f && Mathf.Abs(vel.y) > minBounceVel){
+				float angleDiff = Mathf.Abs( that.transform.eulerAngles.z - transform.eulerAngles.z);
+				if (angleDiff > landingEase)
+					bounce = true;
+			}
 			switch (that.coll) {
 			case PE_Collider.aabb:
 
@@ -241,7 +252,12 @@ public class PE_Obj : MonoBehaviour {
 				break;
 
 			}
-
+			if (bounce){
+				print ("bouncing");
+				vel.y = bounceVel;
+				vel.x -= vel.x * bounceSlow;
+				thisBike.curState = Bike.State.IN_AIR;
+			}
 			break;
 		}
 
