@@ -64,9 +64,9 @@ public class GameRunner : MonoBehaviour {
 		tempSize.x = temp / 100;
 		tempSize.y = .01f;
 		tempSize.z = 2.139454f;
-		print (tempSize.x);
-		print (tempSize.y);
-		print (tempSize.z);
+		//print (tempSize.x);
+		//print (tempSize.y);
+		//print (tempSize.z);
 		//print (tempSize.x);
 		tempMeter.transform.localScale = tempSize;
 
