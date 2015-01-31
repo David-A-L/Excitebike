@@ -139,7 +139,10 @@ public class PE_Obj : MonoBehaviour {
 			float bounceVel = -vel.y * bouncePower;
 			bounceVel = bounceVel > bounceFloorVel? bounceVel:bounceFloorVel;
 			if (thisBike.curState == Bike.State.IN_AIR && vel.y < 0f && Mathf.Abs(vel.y) > minBounceVel){
-				float angleDiff = Mathf.Abs( that.transform.eulerAngles.z - transform.eulerAngles.z);
+				float myAngle = transform.eulerAngles.z;
+				if (myAngle > 180f)
+					myAngle = 360f - myAngle; 
+				float angleDiff = Mathf.Abs( that.transform.eulerAngles.z - myAngle);
 				if (angleDiff > landingEase)
 					bounce = true;
 			}
