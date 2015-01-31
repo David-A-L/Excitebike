@@ -2,7 +2,11 @@ fileFormatVersion: 2
 guid: f8cdee0a3acf364438707b182e7216cb
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - highTemp: {fileID: 8300000, guid: c9658709f349e9e4f8abd48133ed2932, type: 3}
+  - bikeScript: {instanceID: 0}
+  - playerBike: {instanceID: 0}
+  - tempMeter: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
