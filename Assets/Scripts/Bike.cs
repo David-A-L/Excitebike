@@ -47,7 +47,6 @@ public class Bike : MonoBehaviour {
 	public float maxAngle = 80f;
 
 	public Vector3 newPosition = Vector3.zero;
-	//public float transitionTime = 1f;
 
 	float rotSpeed = 70f;
 	public float slowAcc = 3.25f;
@@ -104,7 +103,7 @@ public class Bike : MonoBehaviour {
 
 	void OnGUI () {
 		if (overheated) {
-			GUI.Label (new Rect (400, 100, 100, 1000), "Over Heat"); 
+			GUI.Label (new Rect (450, 75, 200, 2000), "Over Heat"); 
 		}
 	}
 
@@ -186,6 +185,8 @@ public class Bike : MonoBehaviour {
 	void FixedUpdate (){
 		if (!raceStarted)
 			return;
+		//else {
+
 
 		PE_Obj bikePEO = this.GetComponent<PE_Obj> ();
 

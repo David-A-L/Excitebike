@@ -2,8 +2,6 @@
 using System.Collections;
 
 //should take 7 seconds to overheat (while holding down fast accel) instead of 9
-//boost pads should reset temp to default
-//fast accel over 80% play high temp noise
 
 public class GameRunner : MonoBehaviour {
 
@@ -19,13 +17,12 @@ public class GameRunner : MonoBehaviour {
 	public Bike bikeScript;
 	public GameObject playerBike;
 	public GameObject tempMeter;
+
 	// Use this for initialization
-	void Start () {
-		
+	void Start () {	
 		temp = restingTemp;
 		bikeScript = playerBike.GetComponent<Bike> ();
 	}
-	
 	
 	void FixedUpdate () {
 		if (bikeScript.crashed) {
@@ -76,15 +73,13 @@ public class GameRunner : MonoBehaviour {
 		tempSize.y = .01f;
 		tempSize.z = 2.139454f;
 		tempMeter.transform.localScale = tempSize;
-		
-		//print (tempMeter.transform.localPosition.x);
+
 		//moving it forward a little bit so it only "grows to the right"
 		Vector3 tempPos = tempMeter.transform.localPosition;
 		tempPos.x = -1.12f + tempMeter.transform.localScale.x / 2;
 		tempMeter.transform.localPosition = tempPos;
 
 		if (temp >= 800 && (Input.GetKey (KeyCode.Z) || Input.GetKey (KeyCode.Comma)) && !bikeScript.crashed && bikeScript.frame % 60 == 0) {
-			print ("hightemp");
 			audio.PlayOneShot(highTemp);
 		}
 	}
