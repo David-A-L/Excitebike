@@ -65,13 +65,11 @@ public class PE_Obj : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		//flash lap time in center of screen
 		if (this.tag == "Bike" && other.tag == "LapRamp") {
-			//print ("asdf");
 			guiTime = Time.time - 2.5f;
 			lapTime();
 			lapDisplay = true;
 		}
 		if (Time.time > guiTime + 4f + 2.5f) {
-			//print("no more lap");
 			lapDisplay = false;
 		}
 
@@ -88,20 +86,6 @@ public class PE_Obj : MonoBehaviour {
 		OnTriggerEnter(other);
 	}
 
-	/*void OnTriggerExit(Collider other) {
-		// Ignore collisions of still objects
-		if (still) return;
-		
-		PE_Obj otherPEO = other.GetComponent<PE_Obj>();
-		if (otherPEO == null) return;
-		
-		// This sets ground to null if we fall off of the current ground
-		// Jumping will also set ground to null
-		//if (ground == otherPEO) {
-		//	ground = null;
-		//}
-	}*/
-	
 	void ResolveCollisionWith(PE_Obj that) {
 		// Assumes that "that" is still
 		Vector3 posFinal = pos1; // Sets a defaut value for posFinal
@@ -130,7 +114,6 @@ public class PE_Obj : MonoBehaviour {
 			break;
 			
 		case PE_Collider.aabb:
-			//Bike thisBike = this.GetComponent<Bike>();
 			bool bounce = false;
 			float bounceVel = -vel.y * bouncePower;
 			bounceVel = bounceVel > bounceFloorVel? bounceVel:bounceFloorVel;
@@ -147,78 +130,54 @@ public class PE_Obj : MonoBehaviour {
 
 				thisBike.curState = Bike.State.ON_GROUND;
 
-				// In Progress (we might need to add top left once we get the bike rotating?
-
 				// AABB / AABB collision
 				float eX1, eY1, eX2, eY2, dX, dY, eX0, eY0;
 
 				Vector3 overlap = Vector3.zero;
 				Vector3 thatP = that.transform.position;
 				Vector3 delta = pos1 - thatP;
-				//if (delta.x >= 0 && delta.y >= 0) 
-				//{ 
-					// Top, Right (of that)
-					// Get the edges that we're concerned with
-					eX0 = pos0.x - this.transform.lossyScale.x / 2;
-					eY0 = pos0.y - this.transform.lossyScale.y / 2;
-					eX1 = pos1.x - this.transform.lossyScale.x / 2;
-					eY1 = pos1.y - this.transform.lossyScale.y / 2;
-					eX2 = thatP.x + that.transform.lossyScale.x / 2 ;
-					eY2 = thatP.y + that.transform.lossyScale.y / 2 ;
+
+				eX0 = pos0.x - this.transform.lossyScale.x / 2;
+				eY0 = pos0.y - this.transform.lossyScale.y / 2;
+				eX1 = pos1.x - this.transform.lossyScale.x / 2;
+				eY1 = pos1.y - this.transform.lossyScale.y / 2;
+				eX2 = thatP.x + that.transform.lossyScale.x / 2 ;
+				eY2 = thatP.y + that.transform.lossyScale.y / 2 ;
 
 
-					// Distance traveled this step
-					dX = eX1 - eX0;
-					dY = eY1 - eY0;
-					float uX = 1;
-					float uY = 1;
-					if (eX1 < eX2) 
-					{ 
-						// Overlap in X direction
-						uX = 1 - (eX2-eX1) / (eX0-eX1);
-					}
-					if (eY1 < eY2) 
-					{
-						// Overlap in Y direction
-						uY = 1 - (eY2-eY1) / (eY0-eY1);
-					}
-					// Find Overlaps (positive is an overlap, negative 
-					//overlap.x = uX;
-					overlap.y = uY;
-
-					if (overlap.y >= 0)
-					{
-						//print ("asdf");
-						Vector3 moved = transform.position;
-						moved.y += (eY2 - eY1);
-						transform.position = moved;
-						vel.y = 0;
-					}
-				//} 
-				/*else if (delta.x >= 0 && delta.y < 0) 
+				// Distance traveled this step
+				dX = eX1 - eX0;
+				dY = eY1 - eY0;
+				float uX = 1;
+				float uY = 1;
+				if (eX1 < eX2) 
 				{ 
-					// Bottom, Right
+					// Overlap in X direction
+					uX = 1 - (eX2-eX1) / (eX0-eX1);
+				}
+				if (eY1 < eY2) 
+				{
+					// Overlap in Y direction
+					uY = 1 - (eY2-eY1) / (eY0-eY1);
+				}
+				// Find Overlaps (positive is an overlap, negative 
+				//overlap.x = uX;
+				overlap.y = uY;
 
-				} 
-				else if (delta.x < 0 && delta.y < 0) 
-				{ 
-					// Bottom, Left
-
-				} 
-				else if (delta.x < 0 && delta.y >= 0) { 
-					// Top, Left
-
-				}*/
+				if (overlap.y >= 0)
+				{
+					//print ("asdf");
+					Vector3 moved = transform.position;
+					moved.y += (eY2 - eY1);
+					transform.position = moved;
+					vel.y = 0;
+				}
 
 				break;
 			
 
 			case PE_Collider.plane:
 				thisBike.curState = Bike.State.ON_RAMP;
-
-				//rotation set to 0
-				//Vector3 tempRot = Vector3.zero;
-				//this.transform.eulerAngles = tempRot;
 
 				GameObject rampGO = that.gameObject;
 				if (rampGO.tag == "Ramp" || rampGO.tag == "LapRamp")
@@ -254,21 +213,16 @@ public class PE_Obj : MonoBehaviour {
 
 			}
 			if (bounce){
-				print ("bouncing");
+				//print ("bouncing");
 				vel.y = bounceVel;
 				vel.x -= vel.x * bounceSlow;
 				thisBike.curState = Bike.State.IN_AIR;
 			}
 			break;
 		}
+	}
 
-		//transform.position = pos1 = posFinal;
-	
-
-		//fixes: needs to rotate smoothly, needs to be overrided if there is rotation input(and the bike
-		//	is moving at a fast enough x velocity or is in air)
-		//this.transform.rotation = that.gameObject.transform.rotation;
-	}//collision resolution
+	//collision resolution
 
 	void OnTriggerExit(Collider other){
 		if (other.tag == "RampBoost") {

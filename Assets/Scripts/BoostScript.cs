@@ -24,12 +24,12 @@ public class BoostScript : MonoBehaviour {
 
 		//no boosting if falling onto the ramp
 		if (otherPEO.vel.y < -10f) {
-			print ("negative y");
+			//print ("negative y");
 			return;
 		}
 		//if moving too slow, no boost applied
 		if (otherPEO.vel.y < minVel){
-			print ("too slow");
+			//print ("too slow");
 			return;
 		}
 		//if holding left, boost will be applied as upward lift
@@ -39,7 +39,7 @@ public class BoostScript : MonoBehaviour {
 		}
 		else {
 			otherPEO.vel += boostGO.transform.right * otherPEO.vel.x * power;
-			print ("boosting");
+			//print ("boosting");
 		}
 	}
 }

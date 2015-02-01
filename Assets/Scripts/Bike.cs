@@ -120,10 +120,7 @@ public class Bike : MonoBehaviour {
 		Vector3 tempRot = Vector3.zero;
 		Vector3 tempVel = Vector3.zero;
 		Vector3 tempAcc = Vector3.zero;
-		
-		//tweak this time based on the sound
-		//should be 4 seconds
-		//modify the sound to match this
+
 		float crashTime = 4f;
 		
 		if (Time.time < curTime + crashTime) {
@@ -137,13 +134,8 @@ public class Bike : MonoBehaviour {
 			overheated = false;
 		}
 	}
-
-
+	
 	void Update(){
-		//should return -1 or 1, gives us direction based on wasd or arrow key input 
-		//if -1 rotate left, if 1 rotate right, if 0 rotate towards parallel w/ surface
-		//float rotateInput = Input.GetAxis("Horizontal"); 
-
 		if (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Period)) {
 			curAccIn = AccInput.SLOW;
 			if (!crashed && frame % 60 == 0) {
@@ -232,7 +224,6 @@ public class Bike : MonoBehaviour {
 			crash();
 		}
 		else if (overheated){
-			//print ("Bike: run overheat()");
 			overheat();
 		}
 		else {
@@ -252,13 +243,11 @@ public class Bike : MonoBehaviour {
 		}
 		else if (bikePEO.vel.x == maxSpeed && curAccIn != AccInput.NONE && curState != State.IN_AIR)
 		{
-			//print ("velfastcheck");
 			bikePEO.UpdateAccel (new Vector3(0,0,0));
 		}
 	
 		if(bikePEO.vel.x <= 0 && curAccIn == AccInput.NONE)
 		{
-			//print("velstopcheck");
 			bikePEO.UpdateAccel (new Vector3(0,0,0));
 			bikePEO.UpdateVel (new Vector3(0, bikePEO.vel.y, bikePEO.vel.z));
 		}
@@ -333,7 +322,7 @@ public class Bike : MonoBehaviour {
 			}
 			else if ((bikePEO.transform.eulerAngles.z >= maxAngle + 25 && bikePEO.transform.eulerAngles.z <= maxAngle + 25 + 4) || (bikePEO.transform.eulerAngles.z <= 360 - maxAngle && bikePEO.transform.eulerAngles.z >= 360 - maxAngle - 5))
 			{
-				print (bikePEO.transform.eulerAngles.z);
+				//print (bikePEO.transform.eulerAngles.z);
 				crashed = true;
 				curTime = Time.time;
 			} 
@@ -347,7 +336,6 @@ public class Bike : MonoBehaviour {
 
 		}
 
-		//minor bug: input right should override input left, not hugely important
 		//in air rotation
 		if (curState == State.IN_AIR) {
 			if (bikePEO.transform.eulerAngles.z >= maxAngle - 1 && bikePEO.transform.eulerAngles.z < 180) {
@@ -387,8 +375,7 @@ public class Bike : MonoBehaviour {
 			Vector3 tempRot = Vector3.zero;
 			bikePEO.transform.eulerAngles = tempRot;
 		}
-
-		//TODO: call update temp based on input
+		
 		}
 
 	}

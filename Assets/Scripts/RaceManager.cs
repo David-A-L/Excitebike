@@ -56,7 +56,7 @@ public class RaceManager : MonoBehaviour {
 		if (Time.time < curTime + countDown)
 			return;
 		runFinish = false;
-		print("RACE FINISHED");
+		//print("RACE FINISHED");
 		Application.LoadLevel("_scene_0");
 	}
 }

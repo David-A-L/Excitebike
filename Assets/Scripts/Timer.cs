@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//add something that makes this pop up with "LAP: [then beneath the time as we jump over the lap ramp]"
-
 public class Timer : MonoBehaviour {
 	private float startTime;
 	public string textTime;
