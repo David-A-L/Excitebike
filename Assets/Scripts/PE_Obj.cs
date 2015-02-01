@@ -66,11 +66,11 @@ public class PE_Obj : MonoBehaviour {
 		//flash lap time in center of screen
 		if (this.tag == "Bike" && other.tag == "LapRamp") {
 			//print ("asdf");
-			guiTime = Time.time - 4f;
+			guiTime = Time.time - 2.5f;
 			lapTime();
 			lapDisplay = true;
 		}
-		if (Time.time > guiTime + 4f) {
+		if (Time.time > guiTime + 4f + 2.5f) {
 			//print("no more lap");
 			lapDisplay = false;
 		}

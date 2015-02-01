@@ -15,6 +15,13 @@ public class RaceManager : MonoBehaviour {
 		runStart = true;
 	}
 
+	void OnGUI () {
+		if (runFinish) {
+			GUI.Label (new Rect (450, 50, 200, 2000), "Race Finished!"); 
+		}
+	}
+
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKey(KeyCode.R)){

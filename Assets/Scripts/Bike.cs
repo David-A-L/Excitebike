@@ -8,6 +8,7 @@ public class Bike : MonoBehaviour {
 	public AudioClip fastAccelSound;
 	public AudioClip crashSound;
 	public AudioClip overheatSound;
+	public AudioClip startSound;
 
 	//two kinds of ramp, can move on one but not the other
 	public enum State {
@@ -67,6 +68,8 @@ public class Bike : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		audio.PlayOneShot(startSound);
+
 		PE_Obj bikePEO = this.GetComponent<PE_Obj> ();
 		Vector3 temp = bikePEO.transform.position;
 		temp.z = -2.25f;
@@ -185,8 +188,6 @@ public class Bike : MonoBehaviour {
 	void FixedUpdate (){
 		if (!raceStarted)
 			return;
-		//else {
-
 
 		PE_Obj bikePEO = this.GetComponent<PE_Obj> ();
 

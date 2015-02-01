@@ -12,7 +12,7 @@ public class Timer : MonoBehaviour {
 	}
 
 	void OnGUI () {
-		float guiTime = Time.time - startTime - 4f;
+		float guiTime = Time.time - startTime - 2.5f;
 
 		int minutes = (int)guiTime / 60;
 		int seconds = (int)guiTime % 60;
