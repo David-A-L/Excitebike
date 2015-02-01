@@ -5,7 +5,6 @@ public class PE_Obj : MonoBehaviour {
 
 	public bool			still = false;
 	public PE_Collider	coll = PE_Collider.sphere;
-	//public PE_Collider	coll2 = PE_Collider.aabb;
 	public PE_GravType	grav = PE_GravType.constant;
 	
 	public Vector3		acc = Vector3.zero;
@@ -26,9 +25,6 @@ public class PE_Obj : MonoBehaviour {
 	public float bounceFloorVel = 9f;
 
 	Vector3 lastRampAngle = Vector3.zero;
-	//public PE_Dir		dir = PE_Dir.still;
-	
-	//public PE_Obj		ground = null; // Stores whether this is on the ground
 	
 	void Start() {
 		if (PhysEngine.objs.IndexOf(this) == -1) {
@@ -55,8 +51,7 @@ public class PE_Obj : MonoBehaviour {
 			GUI.Label (new Rect (450, 100, 100, 1000), textTime);
 		}
 	}
-
-	//display lap time??
+	
 	void lapTime () {
 		
 		int minutes = (int)guiTime / 60;
@@ -70,7 +65,8 @@ public class PE_Obj : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		//flash lap time in center of screen
 		if (this.tag == "Bike" && other.tag == "LapRamp") {
-			guiTime = Time.time;
+			//print ("asdf");
+			guiTime = Time.time - 4f;
 			lapTime();
 			lapDisplay = true;
 		}
@@ -238,14 +234,7 @@ public class PE_Obj : MonoBehaviour {
 				}
 				cornerPos.y -= this.transform.lossyScale.y/2;
 				Vector3 rampVec = rampGO.transform.right;
-
-				if (rampGO.transform.rotation.z != 0)
-					vel = rampVec * vel.magnitude;
-				else {
-					if (vel.y < 0)
-						vel = rampVec * vel.magnitude;
-				}
-
+				vel = rampVec * vel.magnitude;
 				//acc = rampVec * acc.magnitude;
 
 				//RayCasting from corner toward plane to get depth of penetration
