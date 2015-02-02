@@ -12,7 +12,7 @@ public class Spring : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider other){
 		if (other.tag == "Bike") {
-			print ("asdf");
+			//print ("asdf");
 			PE_Obj bikePEO = other.GetComponent<PE_Obj> ();
 			Vector3 tempVel = bikePEO.vel;
 			tempVel.x = -7f;

@@ -27,6 +27,9 @@ public class RaceManager : MonoBehaviour {
 		if (Input.GetKey(KeyCode.R)){
 			Application.LoadLevel("_scene_0");
 		}
+		else if (Input.GetKey (KeyCode.T)) {
+			Application.LoadLevel ("_scene_1");
+		}
 		if (runStart)
 			StartRace ();
 		if (runFinish)
