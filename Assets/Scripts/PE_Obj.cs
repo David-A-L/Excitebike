@@ -170,7 +170,8 @@ public class PE_Obj : MonoBehaviour {
 					Vector3 moved = transform.position;
 					moved.y += (eY2 - eY1);
 					transform.position = moved;
-					vel.y = 0;
+					if (vel.y < 0)
+						vel.y = 0;
 				}
 
 				break;

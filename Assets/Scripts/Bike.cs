@@ -36,6 +36,15 @@ public class Bike : MonoBehaviour {
 	}
 
 	public bool raceStarted = false;
+
+	public bool useJetPack = true;
+	public bool jetOn = false;
+	public int maxFuel = 1000;
+	public int jetFuel;
+	public int consumeRate = -5;
+	public int regenRate = 3;
+	public float jetPower = 30f;
+
 	public AccInput curAccIn = AccInput.NONE;
 	public DirInput curDirIn = DirInput.NONE;
 	public DirInput prevDirIn = DirInput.NONE;
@@ -74,6 +83,7 @@ public class Bike : MonoBehaviour {
 		Vector3 temp = bikePEO.transform.position;
 		temp.z = -2.25f;
 		bikePEO.transform.position = temp;
+		jetFuel = maxFuel;
 	}
 
 	void crash() {
@@ -136,6 +146,25 @@ public class Bike : MonoBehaviour {
 	}
 	
 	void Update(){
+
+		////jet management
+		if(Input.GetKey (KeyCode.C)||Input.GetKey (KeyCode.Slash)) {
+		   jetOn = true;
+		}
+		else {
+		   jetOn = false;
+		}
+
+		if (jetFuel < 0) {
+			jetFuel = 0;
+			jetOn = false;
+		}
+		if (jetOn) {
+			jetFuel += consumeRate;
+		} else
+			jetFuel = (jetFuel + regenRate) < maxFuel? (jetFuel + regenRate):maxFuel;
+		print (jetFuel);
+
 		if (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Period)) {
 			curAccIn = AccInput.SLOW;
 			if (!crashed && frame % 60 == 0) {
@@ -236,23 +265,26 @@ public class Bike : MonoBehaviour {
 			bikePEO.UpdateAccel(new Vector3(constDecel, 0, 0));
 		}
 		else if (bikePEO.vel.x > maxSpeed && curState == State.IN_AIR){
-			bikePEO.UpdateAccel(new Vector3(airDecel, 0, 0));
+				bikePEO.UpdateAccel(new Vector3(airDecel, 0, 0));
 		}
 		else if (bikePEO.vel.x <= maxAirSpeed && curState == State.IN_AIR){
-			bikePEO.UpdateAccel (new Vector3(0,0,0));
+				bikePEO.UpdateAccel (new Vector3(0,0,0));
 		}
 		else if (bikePEO.vel.x == maxSpeed && curAccIn != AccInput.NONE && curState != State.IN_AIR)
 		{
-			bikePEO.UpdateAccel (new Vector3(0,0,0));
+				bikePEO.UpdateAccel (new Vector3(0,0,0));
 		}
 	
 		if(bikePEO.vel.x <= 0 && curAccIn == AccInput.NONE)
 		{
-			bikePEO.UpdateAccel (new Vector3(0,0,0));
+				bikePEO.UpdateAccel (new Vector3(0,0,0));
 			bikePEO.UpdateVel (new Vector3(0, bikePEO.vel.y, bikePEO.vel.z));
 		}
-
-
+		
+		if (jetOn){
+			bikePEO.UpdateAccel(new Vector3(bikePEO.acc.x, bikePEO.acc.y + jetPower, bikePEO.acc.z));
+			curState = State.IN_AIR;
+		}
 
 		//lanes
 		//this needs to only happen on ground (or full width ramp)
