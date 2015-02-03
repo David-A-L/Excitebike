@@ -37,7 +37,7 @@ public class Bike : MonoBehaviour {
 
 	public bool raceStarted = false;
 
-	public bool useJetPack = true;
+	public bool useJetPack;
 	public bool jetOn = false;
 	public int maxFuel = 1000;
 	public int jetFuel;
@@ -148,22 +148,23 @@ public class Bike : MonoBehaviour {
 	void Update(){
 
 		////jet management
-		if(Input.GetKey (KeyCode.C)||Input.GetKey (KeyCode.Slash)) {
-		   jetOn = true;
-		}
-		else {
-		   jetOn = false;
-		}
+		if (useJetPack) {
+			if (Input.GetKey (KeyCode.C) || Input.GetKey (KeyCode.Slash)) {
+					jetOn = true;
+			} else {
+					jetOn = false;
+			}
 
-		if (jetFuel < 0) {
-			jetFuel = 0;
-			jetOn = false;
+			if (jetFuel < 0) {
+					jetFuel = 0;
+					jetOn = false;
+			}
+			if (jetOn) {
+					jetFuel += consumeRate;
+			} else
+					jetFuel = (jetFuel + regenRate) < maxFuel ? (jetFuel + regenRate) : maxFuel;
+			print (jetFuel);
 		}
-		if (jetOn) {
-			jetFuel += consumeRate;
-		} else
-			jetFuel = (jetFuel + regenRate) < maxFuel? (jetFuel + regenRate):maxFuel;
-		print (jetFuel);
 
 		if (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Period)) {
 			curAccIn = AccInput.SLOW;
