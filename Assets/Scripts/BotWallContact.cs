@@ -17,29 +17,31 @@ public class BotWallContact : MonoBehaviour {
 
 	void OnTriggerStay(Collider other){
 		PE_Obj bikePEO = other.GetComponent<PE_Obj> ();
-		
-		if ((Input.GetKey (KeyCode.DownArrow) || Input.GetKey (KeyCode.S)) && other.tag == "Bike")
-		{
+
+		if (other.tag == "Bike") {
 			bikePEO.vel.z = 0f;
-			//tweak (add limiter)
-			if (bikePEO.vel.x > wallSpeed) {
-				bikePEO.acc.x = -3f;
-			}
-			//update these values if we tweak bike.cs
-			else if (bikePEO.vel.x < wallSpeed) {
-				if (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Period)) {
-					bikePEO.acc.x = 3.25f;
+			if ((Input.GetKey (KeyCode.DownArrow) || Input.GetKey (KeyCode.S)) && other.tag == "Bike") {
+				//bikePEO.vel.z = 0f;
+				//tweak (add limiter)
+				if (bikePEO.vel.x > wallSpeed) {
+						bikePEO.acc.x = -3f;
 				}
-				else if (Input.GetKey (KeyCode.Z) || Input.GetKey (KeyCode.Comma)) {
-					bikePEO.acc.x = 5f;
+				//update these values if we tweak bike.cs
+				else if (bikePEO.vel.x < wallSpeed) {
+					if (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Period)) {
+							bikePEO.acc.x = 3.25f;
+					}
+					else if (Input.GetKey (KeyCode.Z) || Input.GetKey (KeyCode.Comma)) {
+							bikePEO.acc.x = 5f;
+					}
 				}
-			}
-			else {
-				bikePEO.acc.x = 0f;
+				else {
+						bikePEO.acc.x = 0f;
+				}
 			}
 		}
 		
-		
 	}
+
 	
 }

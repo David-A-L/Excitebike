@@ -32,9 +32,10 @@ public class TopWallContact : MonoBehaviour {
 		if (bikePEO == null)
 			return;
 
+		bikePEO.vel.z = 0f;
 		if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey (KeyCode.W))
 		{
-			bikePEO.vel.z = 0f;
+			//bikePEO.vel.z = 0f;
 			if (bikePEO.vel.x > wallSpeed) {
 				bikePEO.acc.x = -3f;
 			}
