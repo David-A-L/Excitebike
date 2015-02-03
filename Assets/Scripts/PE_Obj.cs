@@ -194,7 +194,13 @@ public class PE_Obj : MonoBehaviour {
 				}
 				cornerPos.y -= this.transform.lossyScale.y/2;
 				Vector3 rampVec = rampGO.transform.right;
-				vel = rampVec * vel.magnitude;
+				if (rampGO.transform.rotation.z != 0)
+					vel = rampVec * vel.magnitude;
+				else {
+					if (vel.y < 0)
+						vel = rampVec * vel.magnitude;
+				}
+				//vel = rampVec * vel.magnitude;
 				//acc = rampVec * acc.magnitude;
 
 				//RayCasting from corner toward plane to get depth of penetration
