@@ -208,7 +208,7 @@ public class PE_Obj : MonoBehaviour {
 				Ray cornerRay = new Ray(cornerPos,rampGO.transform.up);
 				Debug.DrawRay(cornerPos, rampGO.transform.up * 100f);
 				RaycastHit hit = new RaycastHit();
-				if(!Physics.Raycast(cornerRay,out hit,100f)){
+				if(!Physics.Raycast(cornerRay,out hit,10f)){
 					return;
 				}
 				/*float dist = Mathf.Sqrt(transform.lossyScale.x*transform.lossyScale.x + transform.lossyScale.y*transform.lossyScale.y);
