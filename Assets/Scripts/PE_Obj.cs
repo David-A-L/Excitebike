@@ -18,11 +18,11 @@ public class PE_Obj : MonoBehaviour {
 	public float guiTime;
 	public string textTime;
 	public bool lapDisplay = false;
-	public float landingEase = 35f;
-	public float bouncePower = .5f;
-	public float bounceSlow = .5f;
-	public float minBounceVel = 10f;
-	public float bounceFloorVel = 9f;
+	public static float landingEase = 10f;
+	public static float bouncePower = .5f;
+	public static float bounceSlow = .4f;
+	public static float minBounceVel = 10f;
+	public static float bounceFloorVel = 9f;
 
 	Vector3 lastRampAngle = Vector3.zero;
 	
@@ -118,11 +118,12 @@ public class PE_Obj : MonoBehaviour {
 			float bounceVel = -vel.y * bouncePower;
 			bounceVel = bounceVel > bounceFloorVel? bounceVel:bounceFloorVel;
 			if (thisBike.curState == Bike.State.IN_AIR && vel.y < 0f && Mathf.Abs(vel.y) > minBounceVel){
-				float myAngle = transform.eulerAngles.z;
-				if (myAngle > 180f)
-					myAngle = 360f - myAngle; 
-				float angleDiff = Mathf.Abs( that.transform.eulerAngles.z - myAngle);
-				if (angleDiff > landingEase)
+				float myAngle = Vector3.Angle(transform.up,that.transform.up);
+				//if (myAngle > 180f)
+					//myAngle = 360f - myAngle; 
+				//float angleDiff = Mathf.Abs( that.transform.rotation.z - myAngle);
+				print (myAngle);
+				if (myAngle > landingEase)
 					bounce = true;
 			}
 			switch (that.coll) {
@@ -198,7 +199,7 @@ public class PE_Obj : MonoBehaviour {
 					vel = rampVec * vel.magnitude;
 				else {
 					if (vel.y < 0)
-						vel = rampVec * vel.magnitude;
+						vel = rampVec * vel.x;
 				}
 				//vel = rampVec * vel.magnitude;
 				//acc = rampVec * acc.magnitude;
@@ -220,7 +221,7 @@ public class PE_Obj : MonoBehaviour {
 
 			}
 			if (bounce){
-				//print ("bouncing");
+				print ("bouncing");
 				vel.y = bounceVel;
 				vel.x -= vel.x * bounceSlow;
 				thisBike.curState = Bike.State.IN_AIR;

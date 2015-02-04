@@ -23,7 +23,7 @@ public class BoostScript : MonoBehaviour {
 			return;
 
 		//no boosting if falling onto the ramp
-		if (otherPEO.vel.y < -10f) {
+		if (otherPEO.vel.y < -1f) {
 			//print ("negative y");
 			return;
 		}
@@ -34,8 +34,8 @@ public class BoostScript : MonoBehaviour {
 		}
 		//if holding left, boost will be applied as upward lift
 		if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A)) {
-			otherPEO.vel.y += otherPEO.vel.magnitude * power;
-			otherPEO.vel.x -= otherPEO.vel.magnitude * power/4;
+			otherPEO.vel.y += otherPEO.vel.x * power;
+			otherPEO.vel.x -= otherPEO.vel.x * power/4;
 		}
 		else {
 			otherPEO.vel += boostGO.transform.right * otherPEO.vel.x * power;

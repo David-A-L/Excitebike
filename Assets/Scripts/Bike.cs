@@ -39,11 +39,13 @@ public class Bike : MonoBehaviour {
 
 	public bool useJetPack;
 	public bool jetOn = false;
-	public int maxFuel = 1000;
-	public int jetFuel;
-	public int consumeRate = -5;
-	public int regenRate = 3;
+	//public int maxFuel = 1000;
+	//public int jetFuel;
+	//public int consumeRate = -5;
+	//public int regenRate = 3;
+	public int jetHeatRate = 5;
 	public float jetPower = 30f;
+	GameObject flames;
 
 	public AccInput curAccIn = AccInput.NONE;
 	public DirInput curDirIn = DirInput.NONE;
@@ -75,6 +77,8 @@ public class Bike : MonoBehaviour {
 
 	public int frame = 0;
 
+	public GameRunner grScript;
+
 	// Use this for initialization
 	void Start () {
 		audio.PlayOneShot(startSound);
@@ -83,7 +87,11 @@ public class Bike : MonoBehaviour {
 		Vector3 temp = bikePEO.transform.position;
 		temp.z = -2.25f;
 		bikePEO.transform.position = temp;
-		jetFuel = maxFuel;
+		//jetFuel = maxFuel;
+		flames = GameObject.Find("Flames");
+
+		GameObject scriptParent = GameObject.Find("Main Camera");
+		grScript = scriptParent.GetComponent<GameRunner> ();
 	}
 
 	void crash() {
@@ -148,13 +156,15 @@ public class Bike : MonoBehaviour {
 	void Update(){
 
 		////jet management
-		if (useJetPack) {
+		if (useJetPack && !overheated) {
 			if (Input.GetKey (KeyCode.C) || Input.GetKey (KeyCode.Slash)) {
-					jetOn = true;
+				jetOn = true;
+				flames.renderer.enabled = true;
 			} else {
-					jetOn = false;
+				jetOn = false;
+				flames.renderer.enabled = false;
 			}
-
+			/*
 			if (jetFuel < 0) {
 					jetFuel = 0;
 					jetOn = false;
@@ -163,7 +173,9 @@ public class Bike : MonoBehaviour {
 					jetFuel += consumeRate;
 			} else
 					jetFuel = (jetFuel + regenRate) < maxFuel ? (jetFuel + regenRate) : maxFuel;
-			print (jetFuel);
+			//print (jetFuel);*/
+			if (jetOn)
+				grScript.temp += jetHeatRate;
 		}
 
 		if (Input.GetKey (KeyCode.X) || Input.GetKey (KeyCode.Period)) {
