@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Bike : MonoBehaviour {
-
+	public Color guiColor;
 	public AudioClip idle;
 	public AudioClip slowAccelSound;
 	public AudioClip fastAccelSound;
@@ -124,6 +124,7 @@ public class Bike : MonoBehaviour {
 
 	void OnGUI () {
 		if (overheated) {
+			GUI.contentColor = guiColor;
 			GUI.Label (new Rect (450, 75, 200, 2000), "Over Heat"); 
 		}
 	}

@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class RaceManager : MonoBehaviour {
+	public Color guiColor;
 	public int lapCount = 1;
 	public int lapsInRace = 2;
 	public float countDown = 10f;
@@ -17,6 +18,7 @@ public class RaceManager : MonoBehaviour {
 
 	void OnGUI () {
 		if (runFinish) {
+			GUI.contentColor = guiColor;
 			GUI.Label (new Rect (450, 50, 200, 2000), "Race Finished!"); 
 		}
 	}
