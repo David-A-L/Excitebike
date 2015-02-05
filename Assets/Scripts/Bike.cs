@@ -295,7 +295,10 @@ public class Bike : MonoBehaviour {
 		}
 		
 		if (jetOn){
-			bikePEO.UpdateAccel(new Vector3(bikePEO.acc.x, bikePEO.acc.y + jetPower, bikePEO.acc.z));
+			//this applies jet power directly up
+			//bikePEO.UpdateAccel(new Vector3(bikePEO.acc.x, bikePEO.acc.y + jetPower, bikePEO.acc.z));
+			//this applies jet power toward bottom of the bike
+			bikePEO.acc += transform.up * jetPower;
 			curState = State.IN_AIR;
 		}
 
